@@ -5,6 +5,10 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 WTF_CSRF_ENABLED = True
 SECRET_KEY = 'you-will-never-guess'
 
+#Searching
+WHOOSH_BASE = os.path.join(basedir, 'search.db')
+MAX_SEARCH_RESULTS = 50
+
 # mail server settings
 MAIL_SERVER = 'localhost'
 MAIL_PORT = 25
