@@ -11,6 +11,9 @@ MAIL_PORT = 25
 MAIL_USERNAME = 'palaciowagner'
 MAIL_PASSWORD = '12345'
 
+# pagination
+POSTS_PER_PAGE = 3
+
 # administrator list
 ADMINS = ['palaciowagner@yahoo.com.br']
 
