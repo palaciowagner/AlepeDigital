@@ -2,7 +2,7 @@
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from app import app, db, lm, oid, babel
 from .forms import LoginForm, EditForm, PostForm, SearchForm
-from .models import User, Post
+from .models import User, Post, Deputado
 from datetime import datetime
 from config import POSTS_PER_PAGE, MAX_SEARCH_RESULTS,LANGUAGES
 from flask.ext.babel import gettext
@@ -205,3 +205,17 @@ def search_results(query):
 	return render_template('search_results.html',
 						   query=query,
 						   results=results)
+
+##View de Deputado
+@app.route('/deputado/<nome>')
+@app.route('/deputado/<nome>/<int:page>')
+@login_required
+def deputado(nome, page=1):
+	deputado = Deputado.query.filter_by(nome=nome).first()
+	if deputado == None:
+		flash(gettext('Deputy %(usr)s not found.', usr=nome))
+		return redirect(url_for('index'))
+	posts = user.posts.paginate(page, POSTS_PER_PAGE, False)
+	return render_template('deputado.html',
+						   deputaod=deputado,
+						   projetos=projetos)

@@ -77,6 +77,7 @@
     <Content Include="app\templates\404.html" />
     <Content Include="app\templates\500.html" />
     <Content Include="app\templates\base.html" />
+    <Content Include="app\templates\deputado.html" />
     <Content Include="app\templates\edit.html" />
     <Content Include="app\templates\flash.html" />
     <Content Include="app\templates\index.html" />

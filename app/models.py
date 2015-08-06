@@ -1,14 +1,9 @@
 ﻿from app import db, app
 from hashlib import md5
 import re
-from config import WHOOSH_ENABLED
+#from config import WHOOSH_ENABLED
 
-enable_search = WHOOSH_ENABLED
-if enable_search:
-    import flask.ext.whooshalchemy as whooshalchemy
 
-if enable_search:
-    whooshalchemy.whoosh_index(app, Post)
 
 followers = db.Table('followers',
     db.Column('follower_id', db.Integer, db.ForeignKey('user.id')),
@@ -102,5 +97,44 @@ class Post(db.Model):
     def __repr__(self):
         return '<Post %r>' % (self.body)
 
+class Deputado(db.Model):
+
+    __searchable__ = ['nome']
+
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(50))
+    partido = db.Column(db.String(10))
+    email = db.Column(db.String(50))
+    profissao = db.Column(db.String(60))
+    telefone = db.Column(db.String(20))
+    biografia = db.Column(db.String(300))
+    projetos = db.relationship('Projeto', backref='deputado', lazy='dynamic')
+
+    def avatar(self, size):
+            return 'http://www.gravatar.com/avatar/%s?d=mm&s=%d' % (md5(self.email.encode('utf-8')).hexdigest(), size)
+
+    def __repr__(self):
+        return '<Deputado %r>' % (self.nome)
+
+class Projeto(db.Model):
+
+    __searchable__ = ['nome','texto']
+
+    numero = db.Column(db.String(20), primary_key=True)
+    nome = db.Column(db.String(50))
+    texto = db.Column(db.String(200))
+    status = db.Column(db.String(10))
+    dataPublicacao = db.Column(db.DateTime)
+    deputado_id = db.Column(db.Integer, db.ForeignKey('deputado.id'))
+
+    def __repr__(self):
+        return '<Projeto %r>' % (self.numero)
+#enable_search = WHOOSH_ENABLED
+#if enable_search:
+#    import flask.ext.whooshalchemy as whooshalchemy
+
 if enable_search:
     whooshalchemy.whoosh_index(app, Post)
+
+
+
