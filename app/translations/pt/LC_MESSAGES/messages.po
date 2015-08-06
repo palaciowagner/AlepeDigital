@@ -7,17 +7,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-08-04 00:26-0300\n"
+"POT-Creation-Date: 2015-08-05 22:08-0300\n"
 "PO-Revision-Date: 2015-08-04 00:45-0300\n"
+"Last-Translator: \n"
 "Language-Team: pt <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
-"Last-Translator: \n"
-"Language: pt\n"
-"X-Generator: Poedit 1.8.4\n"
+
+#: app/__init__.py:21
+msgid "Please log in to access this page."
+msgstr ""
 
 #: app/forms.py:28
 msgid ""
@@ -31,52 +33,52 @@ msgstr ""
 msgid "This nickname is already in use. Please choose another one."
 msgstr "Este usuário já está em uso. Por favor escolha outro."
 
-#: app/views.py:24
+#: app/views.py:25
 msgid "Your post is now live!"
 msgstr "Sua postagem está online!"
 
-#: app/views.py:61
+#: app/views.py:60
 msgid "Invalid login. Please try again."
 msgstr "Login inválido. Por favor, tente novamente."
 
-#: app/views.py:104 app/views.py:132
+#: app/views.py:107 app/views.py:135
 #, python-format
 msgid "User %(usr)s not found."
 msgstr "O usuário %(usr)s não foi encontrado."
 
-#: app/views.py:120
+#: app/views.py:123
 msgid "Your changes have been saved."
 msgstr "As suas alterações foram gravadas"
 
-#: app/views.py:135
+#: app/views.py:138
 msgid "You can't follow yourself!"
 msgstr "Você não pode seguir-se!"
 
-#: app/views.py:139
+#: app/views.py:142
 #, python-format
 msgid "Cannot follow %(nick)s."
 msgstr "Você não pode seguir %(nick)s."
 
-#: app/views.py:143
+#: app/views.py:146
 #, python-format
 msgid "You are now following %(nick)s"
 msgstr "Você está agora seguindo %(nick)s"
 
-#: app/views.py:151
+#: app/views.py:154
 #, python-format
 msgid "User %(nick)s not found."
 msgstr "O usuário %(nick)s não foi encontrado."
 
-#: app/views.py:154
+#: app/views.py:157
 msgid "You can't unfollow yourself!"
 msgstr "Você não pode se seguir!"
 
-#: app/views.py:158
+#: app/views.py:161
 #, python-format
 msgid "Cannot unfollow %(nick)s"
 msgstr "Você não pode seguir %(nick)s."
 
-#: app/views.py:162
+#: app/views.py:165
 #, python-format
 msgid "You have stopped following %(nick)s"
 msgstr "Você não está mais seguindo %(nick)s"
@@ -97,15 +99,15 @@ msgstr "Um erro inesperado ocorreu"
 msgid "The administrator has been notified. Sorry for the inconvenience!"
 msgstr "O administrador foi notificado. Desculpe-nos pela inconveniência!"
 
-#: app/templates/base.html:28
+#: app/templates/base.html:31
 msgid "Home"
 msgstr "Página Inicial"
 
-#: app/templates/base.html:30
+#: app/templates/base.html:33
 msgid "Your Profile"
 msgstr "Seu Perfil"
 
-#: app/templates/base.html:31
+#: app/templates/base.html:34
 msgid "Logout"
 msgstr "Logout"
 
@@ -201,3 +203,4 @@ msgstr "Seguir"
 #: app/templates/user.html:21
 msgid "Unfollow"
 msgstr "Deixar de seguir"
+

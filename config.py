@@ -8,6 +8,8 @@ SECRET_KEY = 'you-will-never-guess'
 
 #Searching
 WHOOSH_BASE = os.path.join(basedir, 'search.db')
+# Whoosh does not work on Heroku
+WHOOSH_ENABLED = os.environ.get('HEROKU') is None
 MAX_SEARCH_RESULTS = 50
 
 # mail server settings

@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect, session, url_for, request, g
+﻿from flask import render_template, flash, redirect, session, url_for, request, g
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from app import app, db, lm, oid, babel
 from .forms import LoginForm, EditForm, PostForm, SearchForm
@@ -145,6 +145,22 @@ def follow(nickname):
 	db.session.commit()
 	flash(gettext('You are now following %(nick)s', nick = nickname))
 	return redirect(url_for('user', nickname=nickname))
+
+
+@app.route('/delete/<int:id>')
+@login_required
+def delete(id):
+    post = Post.query.get(id)
+    if post is None:
+        flash('Post not found.')
+        return redirect(url_for('index'))
+    if post.author.id != g.user.id:
+        flash('You cannot delete this post.')
+        return redirect(url_for('index'))
+    db.session.delete(post)
+    db.session.commit()
+    flash('Your post has been deleted.')
+    return redirect(url_for('index'))
 
 @app.route('/unfollow/<nickname>')
 @login_required
