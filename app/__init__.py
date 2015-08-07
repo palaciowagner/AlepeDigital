@@ -8,18 +8,33 @@ from flask.json import JSONEncoder
 from config import basedir, ADMINS, MAIL_SERVER, MAIL_PORT, MAIL_USERNAME, MAIL_PASSWORD
 from .momentjs import momentjs
 
+
+
 app = Flask(__name__)
 app.jinja_env.globals['momentjs'] = momentjs
 app.config.from_object('config')
+
+app.config['SECRET_KEY'] = 'top secret!'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
+app.config['OAUTH_CREDENTIALS'] = {
+    'facebook': {
+        'id': '1603622893225211',
+        'secret': '6bba941e69e6456c5fee709604397e36'
+    }
+}
+
 db = SQLAlchemy(app)
 
 babel = Babel(app)
 
-lm = LoginManager()
-lm.init_app(app)
-lm.login_view = 'login'
-lm.login_message = lazy_gettext('Please log in to access this page.')
-oid = OpenID(app, os.path.join(basedir, 'tmp'))
+#lm = LoginManager()
+#lm.init_app(app)
+#lm.login_view = 'login'
+#lm.login_message = lazy_gettext('Please log in to access this page.')
+#oid = OpenID(app, os.path.join(basedir, 'tmp'))
+
+lm = LoginManager(app)
+lm.login_view = 'index'
 
 if not app.debug:
     import logging

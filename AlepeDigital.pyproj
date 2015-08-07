@@ -39,6 +39,9 @@
     <Compile Include="db_repository\versions\__init__.py" />
     <Compile Include="db_repository\__init__.py" />
     <Compile Include="db_upgrade.py" />
+    <Compile Include="OAuth.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="run.py" />
     <Compile Include="runp.py" />
     <Compile Include="scrapers\alepe\items.py" />

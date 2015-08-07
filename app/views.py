@@ -86,7 +86,7 @@ def before_request():
 	g.user = current_user
 	if g.user.is_authenticated():
 		g.user.last_seen = datetime.utcnow()
-        db.session.add(g.user)
+        #db.session.add(g.user)
         db.session.commit()
         g.search_form = SearchForm()
 	g.locale = get_locale()
@@ -147,6 +147,30 @@ def follow(nickname):
 	return redirect(url_for('user', nickname=nickname))
 
 
+@app.route('/authorize/<provider>')
+def oauth_authorize(provider):
+    if not current_user.is_anonymous():
+        return redirect(url_for('index'))
+    oauth = OAuthSignIn.get_provider(provider)
+    return oauth.authorize()
+
+@app.route('/callback/<provider>')
+def oauth_callback(provider):
+    if not current_user.is_anonymous():
+        return redirect(url_for('index'))
+    oauth = OAuthSignIn.get_provider(provider)
+    social_id, username, email = oauth.callback()
+    if social_id is None:
+        flash('Authentication failed.')
+        return redirect(url_for('index'))
+    user = User.query.filter_by(social_id=social_id).first()
+    if not user:
+        user = User(social_id=social_id, nickname=username, email=email)
+        db.session.add(user)
+        db.session.commit()
+    login_user(user, True)
+    return redirect(url_for('index'))
+
 @app.route('/delete/<int:id>')
 @login_required
 def delete(id):
@@ -205,6 +229,9 @@ def search_results(query):
 	return render_template('search_results.html',
 						   query=query,
 						   results=results)
+if __name__ == '__main__':
+    db.create_all()
+    app.run(debug=True)
 
 ##View de Deputado
 @app.route('/deputado/<nome>')

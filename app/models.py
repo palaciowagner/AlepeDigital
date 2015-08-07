@@ -1,16 +1,23 @@
 ﻿from app import db, app
 from hashlib import md5
 import re
+from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.login import LoginManager, UserMixin, login_user, logout_user, current_user
+#from oauth import OAuthSignIn
+
 #from config import WHOOSH_ENABLED
 
 
+lm = LoginManager(app)
 
 followers = db.Table('followers',
     db.Column('follower_id', db.Integer, db.ForeignKey('user.id')),
     db.Column('followed_id', db.Integer, db.ForeignKey('user.id'))
 )
 
-class User(db.Model):
+
+
+class User(UserMixin,db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nickname = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
@@ -23,6 +30,34 @@ class User(db.Model):
                                secondaryjoin=(followers.c.followed_id == id),
                                backref=db.backref('followers', lazy='dynamic'),
                                lazy='dynamic')
+
+    @lm.user_loader
+    def load_user(id):
+        return User.query.get(int(id))
+
+    @app.route('/authorize/<provider>')
+    def oauth_authorize(provider):
+        if not current_user.is_anonymous():
+            return redirect(url_for('index'))
+        oauth = OAuthSignIn.get_provider(provider)
+        return oauth.authorize()
+
+    @app.route('/callback/<provider>')
+    def oauth_callback(provider):
+        if not current_user.is_anonymous():
+            return redirect(url_for('index'))
+        oauth = OAuthSignIn.get_provider(provider)
+        social_id, username, email = oauth.callback()
+        if social_id is None:
+            flash('Authentication failed.')
+            return redirect(url_for('index'))
+        user = User.query.filter_by(social_id=social_id).first()
+        if not user:
+            user = User(social_id=social_id, nickname=username, email=email)
+            db.session.add(user)
+            db.session.commit()
+        login_user(user, True)
+        return redirect(url_for('index'))
 
 
     def is_authenticated(self):
