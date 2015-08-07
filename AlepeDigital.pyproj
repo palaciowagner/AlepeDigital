@@ -83,6 +83,7 @@
     <Content Include="app\templates\index.html" />
     <Content Include="app\templates\login.html" />
     <Content Include="app\templates\post.html" />
+    <Content Include="app\templates\projeto.html" />
     <Content Include="app\templates\search_results.html" />
     <Content Include="app\templates\user.html" />
   </ItemGroup>

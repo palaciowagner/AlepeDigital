@@ -1,0 +1,13 @@
+C:\AlepeDigital\bin\Microsoft.PythonTools.WebRole.dll
+C:\AlepeDigital\obj\Debug\attach_server.py
+C:\AlepeDigital\obj\Debug\visualstudio_py_debugger.py
+C:\AlepeDigital\obj\Debug\visualstudio_py_repl.py
+C:\AlepeDigital\obj\Debug\visualstudio_py_util.py
+C:\AlepeDigital\obj\Debug\__init__.py
+C:\AlepeDigital\obj\Debug\__main__.py
+C:\AlepeDigital\bin\AzureSetup.cfg
+C:\AlepeDigital\bin\Microsoft.PythonTools.AzureSetup.exe
+C:\AlepeDigital\bin\Microsoft.PythonTools.AzureSetup.exe.config
+C:\AlepeDigital\bin\wfastcgi.py
+C:\AlepeDigital\obj\Debug\web.config
+C:\AlepeDigital\obj\Debug\web.debug.config

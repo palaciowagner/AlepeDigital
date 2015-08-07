@@ -211,11 +211,12 @@ def search_results(query):
 @app.route('/deputado/<nome>/<int:page>')
 @login_required
 def deputado(nome, page=1):
+    
 	deputado = Deputado.query.filter_by(nome=nome).first()
 	if deputado == None:
 		flash(gettext('Deputy %(usr)s not found.', usr=nome))
 		return redirect(url_for('index'))
-	posts = user.posts.paginate(page, POSTS_PER_PAGE, False)
+	projetos = deputado.projetos.paginate(page, POSTS_PER_PAGE, False)
 	return render_template('deputado.html',
-						   deputaod=deputado,
+						   deputado=deputado,
 						   projetos=projetos)
