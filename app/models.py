@@ -3,7 +3,7 @@ from hashlib import md5
 import re
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager, UserMixin, login_user, logout_user, current_user
-#from oauth import OAuthSignIn
+
 
 #from config import WHOOSH_ENABLED
 
@@ -18,7 +18,9 @@ followers = db.Table('followers',
 
 
 class User(UserMixin,db.Model):
+    __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
+    social_id = db.Column(db.String(64), nullable=False, unique=True)
     nickname = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
     posts = db.relationship('Post', backref='author', lazy='dynamic')
@@ -35,29 +37,29 @@ class User(UserMixin,db.Model):
     def load_user(id):
         return User.query.get(int(id))
 
-    @app.route('/authorize/<provider>')
-    def oauth_authorize(provider):
-        if not current_user.is_anonymous():
-            return redirect(url_for('index'))
-        oauth = OAuthSignIn.get_provider(provider)
-        return oauth.authorize()
+    #@app.route('/authorize/<provider>')
+    #def oauth_authorize(provider):
+    #    if not current_user.is_anonymous():
+    #        return redirect(url_for('index'))
+    #    oauth = OAuthSignIn.get_provider(provider)
+    #    return oauth.authorize()
 
-    @app.route('/callback/<provider>')
-    def oauth_callback(provider):
-        if not current_user.is_anonymous():
-            return redirect(url_for('index'))
-        oauth = OAuthSignIn.get_provider(provider)
-        social_id, username, email = oauth.callback()
-        if social_id is None:
-            flash('Authentication failed.')
-            return redirect(url_for('index'))
-        user = User.query.filter_by(social_id=social_id).first()
-        if not user:
-            user = User(social_id=social_id, nickname=username, email=email)
-            db.session.add(user)
-            db.session.commit()
-        login_user(user, True)
-        return redirect(url_for('index'))
+    #@app.route('/callback/<provider>')
+    #def oauth_callback(provider):
+    #    if not current_user.is_anonymous():
+    #        return redirect(url_for('index'))
+    #    oauth = OAuthSignIn.get_provider(provider)
+    #    social_id, username, email = oauth.callback()
+    #    if social_id is None:
+    #        flash('Authentication failed.')
+    #        return redirect(url_for('index'))
+    #    user = User.query.filter_by(social_id=social_id).first()
+    #    if not user:
+    #        user = User(social_id=social_id, nickname=username, email=email)
+    #        db.session.add(user)
+    #        db.session.commit()
+    #    login_user(user, True)
+    #    return redirect(url_for('index'))
 
 
     def is_authenticated(self):
@@ -84,14 +86,9 @@ class User(UserMixin,db.Model):
             version += 1
         return new_nickname
 
-    def __repr__(self):
-        return '<User %r>' % (self.nickname)
-
-    def get_id(self):
-        try:
-            return unicode(self.id)  # python 2
-        except NameError:
-            return str(self.id)  # python 3
+    @staticmethod
+    def make_valid_nickname(nickname):
+        return re.sub('[^a-zA-Z0-9_\.]', '', nickname)
 
     def follow(self, user):
         if not self.is_following(user):
@@ -109,9 +106,17 @@ class User(UserMixin,db.Model):
     def followed_posts(self):
         return Post.query.join(followers, (followers.c.followed_id == Post.user_id)).filter(followers.c.follower_id == self.id).order_by(Post.timestamp.desc())
 
-    @staticmethod
-    def make_valid_nickname(nickname):
-        return re.sub('[^a-zA-Z0-9_\.]', '', nickname)
+   
+    def __repr__(self):
+        return '<User %r>' % (self.nickname)
+
+    #def get_id(self):
+    #    try:
+    #        return unicode(self.id)  # python 2
+    #    except NameError:
+    #        return str(self.id)  # python 3
+
+    
 
 
 import sys

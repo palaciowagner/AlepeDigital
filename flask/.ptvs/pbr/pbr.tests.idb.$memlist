@@ -1,0 +1,9 @@
+test_version
+test_packaging
+util
+test_core
+test_files
+test_commands
+test_setup
+test_hooks
+base

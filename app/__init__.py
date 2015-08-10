@@ -2,29 +2,16 @@
 from flask.ext.sqlalchemy import SQLAlchemy
 import os
 from flask.ext.login import LoginManager
-from flask.ext.openid import OpenID
 from flask.ext.babel import Babel, gettext, lazy_gettext
 from flask.json import JSONEncoder
-from config import basedir, ADMINS, MAIL_SERVER, MAIL_PORT, MAIL_USERNAME, MAIL_PASSWORD
+from config import basedir, ADMINS, MAIL_SERVER, MAIL_PORT, MAIL_USERNAME, MAIL_PASSWORD, SECRET_KEY, OAUTH_CREDENTIALS
 from .momentjs import momentjs
-
-
 
 app = Flask(__name__)
 app.jinja_env.globals['momentjs'] = momentjs
 app.config.from_object('config')
 
-app.config['SECRET_KEY'] = 'top secret!'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
-app.config['OAUTH_CREDENTIALS'] = {
-    'facebook': {
-        'id': '1603622893225211',
-        'secret': '6bba941e69e6456c5fee709604397e36'
-    }
-}
-
 db = SQLAlchemy(app)
-
 babel = Babel(app)
 
 #lm = LoginManager()
@@ -35,6 +22,7 @@ babel = Babel(app)
 
 lm = LoginManager(app)
 lm.login_view = 'index'
+lm.login_message = lazy_gettext('Please log in to access this page.')
 
 if not app.debug:
     import logging
@@ -46,15 +34,15 @@ if not app.debug:
     mail_handler.setLevel(logging.ERROR)
     app.logger.addHandler(mail_handler)
 
-if not app.debug and os.environ.get('HEROKU') is None:
-    import logging
-    from logging.handlers import RotatingFileHandler
-    file_handler = RotatingFileHandler('tmp/microblog.log', 'a', 1 * 1024 * 1024, 10)
-    file_handler.setLevel(logging.INFO)
-    file_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'))
-    app.logger.addHandler(file_handler)
-    app.logger.setLevel(logging.INFO)
-    app.logger.info('microblog startup')
+#if not app.debug:
+#    import logging
+#    from logging.handlers import RotatingFileHandler
+#    file_handler = RotatingFileHandler('tmp/microblog.log', 'a', 1 * 1024 * 1024, 10)
+#    file_handler.setLevel(logging.INFO)
+#    file_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'))
+#    app.logger.addHandler(file_handler)
+#    app.logger.setLevel(logging.INFO)
+#    app.logger.info('microblog startup')
 
 #if os.environ.get('HEROKU') is not None:
 #    import logging

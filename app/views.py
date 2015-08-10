@@ -1,11 +1,12 @@
 ﻿from flask import render_template, flash, redirect, session, url_for, request, g
 from flask.ext.login import login_user, logout_user, current_user, login_required
-from app import app, db, lm, oid, babel
+from app import app, db, lm, babel
 from .forms import LoginForm, EditForm, PostForm, SearchForm
 from .models import User, Post, Deputado
 from datetime import datetime
 from config import POSTS_PER_PAGE, MAX_SEARCH_RESULTS,LANGUAGES
 from flask.ext.babel import gettext
+from OAuth import OAuthSignIn
 
 @babel.localeselector
 def get_locale():
@@ -15,7 +16,7 @@ def get_locale():
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 @app.route('/index/<int:page>', methods=['GET', 'POST'])
-@login_required
+#@login_required
 def index(page=1):
 	form = PostForm()
 	if form.validate_on_submit():
@@ -34,51 +35,80 @@ def index(page=1):
 ##Load User function						   
 @lm.user_loader
 def load_user(id):
-	return User.query.get(int(id))
+    return User.query.get(int(id))
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
+
+@app.route('/authorize/<provider>')
+def oauth_authorize(provider):
+    if not current_user.is_anonymous():
+        return redirect(url_for('index'))
+    oauth = OAuthSignIn.get_provider(provider)
+    return oauth.authorize()
+
+@app.route('/callback/<provider>')
+def oauth_callback(provider):
+    if not current_user.is_anonymous():
+        return redirect(url_for('index'))
+    oauth = OAuthSignIn.get_provider(provider)
+    social_id, username, email = oauth.callback()
+    if social_id is None:
+        flash('Authentication failed.')
+        return redirect(url_for('index'))
+    user = User.query.filter_by(social_id=social_id).first()
+    if not user:
+        user = User(social_id=social_id, nickname=username, email=email)
+        db.session.add(user)
+        db.session.commit()
+    login_user(user, True)
+    return redirect(url_for('index'))
+
 						   
 ##Login Function						   
 @app.route('/login', methods=['GET', 'POST'])
-@oid.loginhandler
+#@oid.loginhandler
 def login():
 	if g.user is not None and g.user.is_authenticated():
 		return redirect(url_for('index'))
 	form = LoginForm()
-	if form.validate_on_submit():
-		session['remember_me'] = form.remember_me.data
-		return oid.try_login(form.openid.data, ask_for=['nickname', 'email'])
+	#if form.validate_on_submit():
+	#	session['remember_me'] = form.remember_me.data
+	#	return oid.try_login(form.openid.data, ask_for=['nickname', 'email'])
 	return render_template('login.html',
-						   title='Sign In',
-						   form=form,
-						   providers=app.config['OPENID_PROVIDERS'])
-
-##After Login
-@oid.after_login
-def after_login(resp):
+						   title='Sign In')
 
 
-	if resp.email is None or resp.email == "":
-		flash(gettext('Invalid login. Please try again.'))
-		return redirect(url_for('login'))
-	user = User.query.filter_by(email=resp.email).first()
-	if user is None:
-		nickname = resp.nickname
-		if nickname is None or nickname == "":
-			nickname = resp.email.split('@')[0]
-		nickname = User.make_valid_nickname(nickname)
-		nickname = User.make_unique_nickname(nickname)
-		user = User(nickname = nickname, email = resp.email)
-		db.session.add(user)
-		db.session.commit()
-		db.session.add(user.follow(user))
-		db.session.commit()
-	remember_me = False
-	if 'remember_me' in session:
-		remember_me = session['remember_me']
-		session.pop('remember_me', None)
-	login_user(user, remember = remember_me)
+###After Login
+#@oid.after_login
+#def after_login(resp):
 
 
-	return redirect(request.args.get('next') or url_for('index'))
+#	if resp.email is None or resp.email == "":
+#		flash(gettext('Invalid login. Please try again.'))
+#		return redirect(url_for('login'))
+#	user = User.query.filter_by(email=resp.email).first()
+#	if user is None:
+#		nickname = resp.nickname
+#		if nickname is None or nickname == "":
+#			nickname = resp.email.split('@')[0]
+#		nickname = User.make_valid_nickname(nickname)
+#		nickname = User.make_unique_nickname(nickname)
+#		user = User(nickname = nickname, email = resp.email)
+#		db.session.add(user)
+#		db.session.commit()
+#		db.session.add(user.follow(user))
+#		db.session.commit()
+#	remember_me = False
+#	if 'remember_me' in session:
+#		remember_me = session['remember_me']
+#		session.pop('remember_me', None)
+#	login_user(user, remember = remember_me)
+
+
+#	return redirect(request.args.get('next') or url_for('index'))
 		
 ##Before Request		
 @app.before_request
@@ -92,10 +122,10 @@ def before_request():
 	g.locale = get_locale()
 	
 ##Logout Function
-@app.route('/logout')
-def logout():
-	logout_user()
-	return redirect(url_for('index'))
+#@app.route('/logout')
+#def logout():
+#	logout_user()
+#	return redirect(url_for('index'))
 	
 ##View de user
 @app.route('/user/<nickname>')
@@ -145,31 +175,6 @@ def follow(nickname):
 	db.session.commit()
 	flash(gettext('You are now following %(nick)s', nick = nickname))
 	return redirect(url_for('user', nickname=nickname))
-
-
-@app.route('/authorize/<provider>')
-def oauth_authorize(provider):
-    if not current_user.is_anonymous():
-        return redirect(url_for('index'))
-    oauth = OAuthSignIn.get_provider(provider)
-    return oauth.authorize()
-
-@app.route('/callback/<provider>')
-def oauth_callback(provider):
-    if not current_user.is_anonymous():
-        return redirect(url_for('index'))
-    oauth = OAuthSignIn.get_provider(provider)
-    social_id, username, email = oauth.callback()
-    if social_id is None:
-        flash('Authentication failed.')
-        return redirect(url_for('index'))
-    user = User.query.filter_by(social_id=social_id).first()
-    if not user:
-        user = User(social_id=social_id, nickname=username, email=email)
-        db.session.add(user)
-        db.session.commit()
-    login_user(user, True)
-    return redirect(url_for('index'))
 
 @app.route('/delete/<int:id>')
 @login_required
@@ -229,9 +234,7 @@ def search_results(query):
 	return render_template('search_results.html',
 						   query=query,
 						   results=results)
-if __name__ == '__main__':
-    db.create_all()
-    app.run(debug=True)
+
 
 ##View de Deputado
 @app.route('/deputado/<nome>')
@@ -247,3 +250,7 @@ def deputado(nome, page=1):
 	return render_template('deputado.html',
 						   deputado=deputado,
 						   projetos=projetos)
+
+if __name__ == '__main__':
+    db.create_all()
+    app.run(debug=True)

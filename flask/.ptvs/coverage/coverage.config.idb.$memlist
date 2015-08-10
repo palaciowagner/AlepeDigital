@@ -1,0 +1,11 @@
+DEFAULT_PARTIAL
+string_class
+HandyConfigParser
+os
+sys
+CoverageConfig
+iitems
+configparser
+DEFAULT_EXCLUDE
+DEFAULT_PARTIAL_ALWAYS
+re

@@ -1,0 +1,13 @@
+git
+TestNestedRequirements
+os
+TestPackagingInGitRepoWithCommit
+TestRepo
+tempfile
+packaging
+TestPackagingInGitRepoWithoutCommit
+TestPresenceOfGit
+TestPackagingInPlainDirectory
+mock
+fixtures
+base
