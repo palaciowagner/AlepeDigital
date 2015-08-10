@@ -21,7 +21,7 @@ babel = Babel(app)
 #oid = OpenID(app, os.path.join(basedir, 'tmp'))
 
 lm = LoginManager(app)
-lm.login_view = 'index'
+lm.login_view = 'login'
 lm.login_message = lazy_gettext('Please log in to access this page.')
 
 if not app.debug:

@@ -23,8 +23,8 @@
         </div>
     </form>
 </div>
-{% for post in posts.items %}
-    {% include 'post.html' %}
+{% for projeto in projetos.items %}
+    {% include 'projeto.html' %}
 {% endfor %}
 <ul class="pager">
     {% if posts.has_prev %}

@@ -2,7 +2,7 @@
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from app import app, db, lm, babel
 from .forms import LoginForm, EditForm, PostForm, SearchForm
-from .models import User, Post, Deputado
+from .models import User, Post, Deputado, Projeto
 from datetime import datetime
 from config import POSTS_PER_PAGE, MAX_SEARCH_RESULTS,LANGUAGES
 from flask.ext.babel import gettext
@@ -25,6 +25,7 @@ def index(page=1):
 		db.session.commit()
 		flash(gettext('Your post is now live!'))
 		return redirect(url_for('index'))
+    projetos = Projeto.query.all()
 	posts = g.user.followed_posts().paginate(page, POSTS_PER_PAGE, False)
 	return render_template('index.html',
 						   title='Home',
@@ -66,20 +67,18 @@ def oauth_callback(provider):
     login_user(user, True)
     return redirect(url_for('index'))
 
-						   
 ##Login Function						   
 @app.route('/login', methods=['GET', 'POST'])
 #@oid.loginhandler
 def login():
 	if g.user is not None and g.user.is_authenticated():
 		return redirect(url_for('index'))
-	form = LoginForm()
+	#form = LoginForm()
 	#if form.validate_on_submit():
 	#	session['remember_me'] = form.remember_me.data
 	#	return oid.try_login(form.openid.data, ask_for=['nickname', 'email'])
 	return render_template('login.html',
 						   title='Sign In')
-
 
 ###After Login
 #@oid.after_login

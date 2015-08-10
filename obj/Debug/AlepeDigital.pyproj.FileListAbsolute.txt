@@ -11,3 +11,5 @@ C:\AlepeDigital\bin\Microsoft.PythonTools.AzureSetup.exe.config
 C:\AlepeDigital\bin\wfastcgi.py
 C:\AlepeDigital\obj\Debug\web.config
 C:\AlepeDigital\obj\Debug\web.debug.config
+C:\AlepeDigital\obj\Debug\deployment-updated-orig-prefix.txt
+C:\AlepeDigital\ptvs_virtualenv_proxy.py
