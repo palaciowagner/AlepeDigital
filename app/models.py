@@ -19,10 +19,8 @@ lm = LoginManager(app)
 
 followers = db.Table('followers',
     db.Column('follower_id', db.Integer, db.ForeignKey('user.id')),
-    db.Column('followed_id', db.Integer, db.ForeignKey('user.id'))
+    db.Column('followed_id', db.Integer, db.ForeignKey('deputado.id'))
 )
-
-
 
 class User(UserMixin,db.Model):
     
@@ -33,10 +31,9 @@ class User(UserMixin,db.Model):
     posts = db.relationship('Post', backref='author', lazy='dynamic')
     about_me = db.Column(db.String(140))
     last_seen = db.Column(db.DateTime)
-    followed = db.relationship('User',
+    followed = db.relationship('Deputado',
                                secondary=followers,
                                primaryjoin=(followers.c.follower_id == id),
-                               secondaryjoin=(followers.c.followed_id == id),
                                backref=db.backref('followers', lazy='dynamic'),
                                lazy='dynamic')
 
@@ -97,23 +94,22 @@ class User(UserMixin,db.Model):
     def make_valid_nickname(nickname):
         return re.sub('[^a-zA-Z0-9_\.]', '', nickname)
 
-    def follow(self, user):
-        if not self.is_following(user):
-            self.followed.append(user)
+    def follow(self, deputado):
+        if not self.is_following(deputado):
+            self.followed.append(deputado)
             return self
 
-    def unfollow(self, user):
-        if self.is_following(user):
-            self.followed.remove(user)
+    def unfollow(self, deputado):
+        if self.is_following(deputado):
+            self.followed.remove(deputado)
             return self
 
-    def is_following(self, user):
-        return self.followed.filter(followers.c.followed_id == user.id).count() > 0
+    def is_following(self, deputado):
+        return self.followed.filter(followers.c.followed_id == deputado.id).count() > 0
 
-    def followed_posts(self):
-        return Post.query.join(followers, (followers.c.followed_id == Post.user_id)).filter(followers.c.follower_id == self.id).order_by(Post.timestamp.desc())
-
-   
+    def followed_projetos(self):
+        return Projeto.query.join(followers, (followers.c.followed_id == Projeto.deputado_id)).filter(followers.c.follower_id == self.id).order_by(Projeto.dataPublicacao.desc())
+       
     def __repr__(self):
         return '<User %r>' % (self.nickname)
 
@@ -148,6 +144,7 @@ class Deputado(db.Model):
     telefone = db.Column(db.String(20))
     biografia = db.Column(db.String(300))
     projetos = db.relationship('Projeto', backref='deputado', lazy='dynamic')
+    
 
     def avatar(self, size):
             return 'http://www.gravatar.com/avatar/%s?d=mm&s=%d' % (md5(self.email.encode('utf-8')).hexdigest(), size)
