@@ -5304,3 +5304,88 @@ C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\Extensions\Micro
 2015-08-10T20:26:50: Saving group "C:\AlepeDigital\flask\Lib\site-packages\_markerlib"
 2015-08-10T20:26:50: End of group "C:\AlepeDigital\flask\Lib\site-packages\_markerlib"
 2015-08-10T20:26:52: Deleting 0 files
+
+2015-08-11T00:15:45: Start analysis
+2015-08-11T00:15:45: [WARNING] Library was set explicitly - skipping path detection
+2015-08-11T00:15:45: IncludeModulesFromModulePath = win32com
+2015-08-11T00:15:48: Deleting 0 files
+2015-08-11T00:15:50: Scraping psycopg2._psycopg
+2015-08-11T00:15:50: Command: C:\AlepeDigital\flask\Scripts\python.exe "C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\Extensions\Microsoft\Python Tools for Visual Studio\2.2\ExtensionScraper.py" scrape psycopg2._psycopg C:\AlepeDigital\flask\Lib\site-packages\psycopg2-2.6.1-py2.7-win-amd64.egg C:\AlepeDigital\flask\.ptvs\psycopg2\psycopg2._psycopg
+2015-08-11T00:15:50: Scraped 1 files
+2015-08-11T00:15:50: astropy.CallDepth = 0
+2015-08-11T00:15:50: matplotlib.CallDepth = 3
+2015-08-11T00:15:50: pandas.CallDepth = 0
+2015-08-11T00:15:50: sympy.CallDepth = 0
+2015-08-11T00:15:50: Start group "C:\AlepeDigital\flask\Lib\site-packages\psycopg2-2.6.1-py2.7-win-amd64.egg\psycopg2" with 33 files
+2015-08-11T00:15:52: Parsing "psycopg2.errorcodes" ("C:\AlepeDigital\flask\Lib\site-packages\psycopg2-2.6.1-py2.7-win-amd64.egg\psycopg2\errorcodes.py")
+2015-08-11T00:15:52: Parsing "psycopg2.extensions" ("C:\AlepeDigital\flask\Lib\site-packages\psycopg2-2.6.1-py2.7-win-amd64.egg\psycopg2\extensions.py")
+2015-08-11T00:15:52: Parsing "psycopg2.extras" ("C:\AlepeDigital\flask\Lib\site-packages\psycopg2-2.6.1-py2.7-win-amd64.egg\psycopg2\extras.py")
+2015-08-11T00:15:52: Parsing "psycopg2.pool" ("C:\AlepeDigital\flask\Lib\site-packages\psycopg2-2.6.1-py2.7-win-amd64.egg\psycopg2\pool.py")
+2015-08-11T00:15:52: Parsing "psycopg2.psycopg1" ("C:\AlepeDigital\flask\Lib\site-packages\psycopg2-2.6.1-py2.7-win-amd64.egg\psycopg2\psycopg1.py")
+2015-08-11T00:15:52: Parsing "psycopg2.tz" ("C:\AlepeDigital\flask\Lib\site-packages\psycopg2-2.6.1-py2.7-win-amd64.egg\psycopg2\tz.py")
+2015-08-11T00:15:52: Parsing "psycopg2._json" ("C:\AlepeDigital\flask\Lib\site-packages\psycopg2-2.6.1-py2.7-win-amd64.egg\psycopg2\_json.py")
+2015-08-11T00:15:52: Parsing "psycopg2._range" ("C:\AlepeDigital\flask\Lib\site-packages\psycopg2-2.6.1-py2.7-win-amd64.egg\psycopg2\_range.py")
+2015-08-11T00:15:52: Parsing "psycopg2" ("C:\AlepeDigital\flask\Lib\site-packages\psycopg2-2.6.1-py2.7-win-amd64.egg\psycopg2\__init__.py")
+2015-08-11T00:15:52: Parsing "psycopg2.tests.dbapi20" ("C:\AlepeDigital\flask\Lib\site-packages\psycopg2-2.6.1-py2.7-win-amd64.egg\psycopg2\tests\dbapi20.py")
+2015-08-11T00:15:52: Parsing "psycopg2.tests.dbapi20_tpc" ("C:\AlepeDigital\flask\Lib\site-packages\psycopg2-2.6.1-py2.7-win-amd64.egg\psycopg2\tests\dbapi20_tpc.py")
+2015-08-11T00:15:52: Parsing "psycopg2.tests.testconfig" ("C:\AlepeDigital\flask\Lib\site-packages\psycopg2-2.6.1-py2.7-win-amd64.egg\psycopg2\tests\testconfig.py")
+2015-08-11T00:15:52: Parsing "psycopg2.tests.testutils" ("C:\AlepeDigital\flask\Lib\site-packages\psycopg2-2.6.1-py2.7-win-amd64.egg\psycopg2\tests\testutils.py")
+2015-08-11T00:15:52: Parsing "psycopg2.tests.test_async" ("C:\AlepeDigital\flask\Lib\site-packages\psycopg2-2.6.1-py2.7-win-amd64.egg\psycopg2\tests\test_async.py")
+2015-08-11T00:15:52: Parsing "psycopg2.tests.test_bugX000" ("C:\AlepeDigital\flask\Lib\site-packages\psycopg2-2.6.1-py2.7-win-amd64.egg\psycopg2\tests\test_bugX000.py")
+2015-08-11T00:15:52: Parsing "psycopg2.tests.test_bug_gc" ("C:\AlepeDigital\flask\Lib\site-packages\psycopg2-2.6.1-py2.7-win-amd64.egg\psycopg2\tests\test_bug_gc.py")
+2015-08-11T00:15:52: Parsing "psycopg2.tests.test_cancel" ("C:\AlepeDigital\flask\Lib\site-packages\psycopg2-2.6.1-py2.7-win-amd64.egg\psycopg2\tests\test_cancel.py")
+2015-08-11T00:15:52: Parsing "psycopg2.tests.test_connection" ("C:\AlepeDigital\flask\Lib\site-packages\psycopg2-2.6.1-py2.7-win-amd64.egg\psycopg2\tests\test_connection.py")
+2015-08-11T00:15:52: Parsing "psycopg2.tests.test_copy" ("C:\AlepeDigital\flask\Lib\site-packages\psycopg2-2.6.1-py2.7-win-amd64.egg\psycopg2\tests\test_copy.py")
+2015-08-11T00:15:52: Parsing "psycopg2.tests.test_cursor" ("C:\AlepeDigital\flask\Lib\site-packages\psycopg2-2.6.1-py2.7-win-amd64.egg\psycopg2\tests\test_cursor.py")
+2015-08-11T00:15:52: Parsing "psycopg2.tests.test_dates" ("C:\AlepeDigital\flask\Lib\site-packages\psycopg2-2.6.1-py2.7-win-amd64.egg\psycopg2\tests\test_dates.py")
+2015-08-11T00:15:52: Parsing "psycopg2.tests.test_extras_dictcursor" ("C:\AlepeDigital\flask\Lib\site-packages\psycopg2-2.6.1-py2.7-win-amd64.egg\psycopg2\tests\test_extras_dictcursor.py")
+2015-08-11T00:15:52: Parsing "psycopg2.tests.test_green" ("C:\AlepeDigital\flask\Lib\site-packages\psycopg2-2.6.1-py2.7-win-amd64.egg\psycopg2\tests\test_green.py")
+2015-08-11T00:15:52: Parsing "psycopg2.tests.test_lobject" ("C:\AlepeDigital\flask\Lib\site-packages\psycopg2-2.6.1-py2.7-win-amd64.egg\psycopg2\tests\test_lobject.py")
+2015-08-11T00:15:52: Parsing "psycopg2.tests.test_module" ("C:\AlepeDigital\flask\Lib\site-packages\psycopg2-2.6.1-py2.7-win-amd64.egg\psycopg2\tests\test_module.py")
+2015-08-11T00:15:53: Parsing "psycopg2.tests.test_notify" ("C:\AlepeDigital\flask\Lib\site-packages\psycopg2-2.6.1-py2.7-win-amd64.egg\psycopg2\tests\test_notify.py")
+2015-08-11T00:15:53: Parsing "psycopg2.tests.test_psycopg2_dbapi20" ("C:\AlepeDigital\flask\Lib\site-packages\psycopg2-2.6.1-py2.7-win-amd64.egg\psycopg2\tests\test_psycopg2_dbapi20.py")
+2015-08-11T00:15:53: Parsing "psycopg2.tests.test_quote" ("C:\AlepeDigital\flask\Lib\site-packages\psycopg2-2.6.1-py2.7-win-amd64.egg\psycopg2\tests\test_quote.py")
+2015-08-11T00:15:53: Parsing "psycopg2.tests.test_transaction" ("C:\AlepeDigital\flask\Lib\site-packages\psycopg2-2.6.1-py2.7-win-amd64.egg\psycopg2\tests\test_transaction.py")
+2015-08-11T00:15:53: Parsing "psycopg2.tests.test_types_basic" ("C:\AlepeDigital\flask\Lib\site-packages\psycopg2-2.6.1-py2.7-win-amd64.egg\psycopg2\tests\test_types_basic.py")
+2015-08-11T00:15:53: Parsing "psycopg2.tests.test_types_extras" ("C:\AlepeDigital\flask\Lib\site-packages\psycopg2-2.6.1-py2.7-win-amd64.egg\psycopg2\tests\test_types_extras.py")
+2015-08-11T00:15:53: Parsing "psycopg2.tests.test_with" ("C:\AlepeDigital\flask\Lib\site-packages\psycopg2-2.6.1-py2.7-win-amd64.egg\psycopg2\tests\test_with.py")
+2015-08-11T00:15:53: Parsing "psycopg2.tests" ("C:\AlepeDigital\flask\Lib\site-packages\psycopg2-2.6.1-py2.7-win-amd64.egg\psycopg2\tests\__init__.py")
+2015-08-11T00:15:53: Parsing complete
+2015-08-11T00:15:53: Analyzing "psycopg2.errorcodes"
+2015-08-11T00:15:53: Analyzing "psycopg2.extensions"
+2015-08-11T00:15:53: Analyzing "psycopg2.extras"
+2015-08-11T00:15:53: Analyzing "psycopg2.pool"
+2015-08-11T00:15:53: Analyzing "psycopg2.psycopg1"
+2015-08-11T00:15:53: Analyzing "psycopg2.tz"
+2015-08-11T00:15:53: Analyzing "psycopg2._json"
+2015-08-11T00:15:53: Analyzing "psycopg2._range"
+2015-08-11T00:15:53: Analyzing "psycopg2"
+2015-08-11T00:15:53: Analyzing "psycopg2.tests.dbapi20"
+2015-08-11T00:15:53: Analyzing "psycopg2.tests.dbapi20_tpc"
+2015-08-11T00:15:53: Analyzing "psycopg2.tests.testconfig"
+2015-08-11T00:15:53: Analyzing "psycopg2.tests.testutils"
+2015-08-11T00:15:53: Analyzing "psycopg2.tests.test_async"
+2015-08-11T00:15:53: Analyzing "psycopg2.tests.test_bugX000"
+2015-08-11T00:15:53: Analyzing "psycopg2.tests.test_bug_gc"
+2015-08-11T00:15:53: Analyzing "psycopg2.tests.test_cancel"
+2015-08-11T00:15:53: Analyzing "psycopg2.tests.test_connection"
+2015-08-11T00:15:53: Analyzing "psycopg2.tests.test_copy"
+2015-08-11T00:15:53: Analyzing "psycopg2.tests.test_cursor"
+2015-08-11T00:15:53: Analyzing "psycopg2.tests.test_dates"
+2015-08-11T00:15:53: Analyzing "psycopg2.tests.test_extras_dictcursor"
+2015-08-11T00:15:53: Analyzing "psycopg2.tests.test_green"
+2015-08-11T00:15:53: Analyzing "psycopg2.tests.test_lobject"
+2015-08-11T00:15:53: Analyzing "psycopg2.tests.test_module"
+2015-08-11T00:15:53: Analyzing "psycopg2.tests.test_notify"
+2015-08-11T00:15:53: Analyzing "psycopg2.tests.test_psycopg2_dbapi20"
+2015-08-11T00:15:53: Analyzing "psycopg2.tests.test_quote"
+2015-08-11T00:15:53: Analyzing "psycopg2.tests.test_transaction"
+2015-08-11T00:15:53: Analyzing "psycopg2.tests.test_types_basic"
+2015-08-11T00:15:53: Analyzing "psycopg2.tests.test_types_extras"
+2015-08-11T00:15:53: Analyzing "psycopg2.tests.test_with"
+2015-08-11T00:15:53: Analyzing "psycopg2.tests"
+2015-08-11T00:15:53: Starting analysis of 33 modules
+2015-08-11T00:15:54: Analysis complete
+2015-08-11T00:15:54: Saving group "C:\AlepeDigital\flask\Lib\site-packages\psycopg2-2.6.1-py2.7-win-amd64.egg\psycopg2"
+2015-08-11T00:15:54: End of group "C:\AlepeDigital\flask\Lib\site-packages\psycopg2-2.6.1-py2.7-win-amd64.egg\psycopg2"
+2015-08-11T00:15:58: Deleting 0 files

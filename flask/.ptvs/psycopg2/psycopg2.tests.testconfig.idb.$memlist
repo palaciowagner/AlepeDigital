@@ -1,0 +1,10 @@
+dbuser
+dsn
+os
+dbhost
+wait_callback
+dbpass
+psycopg2
+dbname
+dbport
+green

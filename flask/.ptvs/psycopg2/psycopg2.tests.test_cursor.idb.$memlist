@@ -1,0 +1,11 @@
+pickle
+psycopg2
+time
+b
+skip_before_postgres
+test_suite
+ConnectingTestCase
+skip_if_no_namedtuple
+skip_if_no_getrefcount
+CursorTests
+unittest
