@@ -89,6 +89,10 @@
     <Content Include="app\templates\projeto.html" />
     <Content Include="app\templates\search_results.html" />
     <Content Include="app\templates\user.html" />
+    <Content Include="app\translations\es\LC_MESSAGES\messages.po" />
+    <Content Include="app\translations\pt\LC_MESSAGES\messages.mo" />
+    <Content Include="app\translations\pt\LC_MESSAGES\messages.po" />
+    <Content Include="requirements.txt" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -98,6 +102,11 @@
     <Folder Include="app\static\img" />
     <Folder Include="app\static\js" />
     <Folder Include="app\templates" />
+    <Folder Include="app\translations\" />
+    <Folder Include="app\translations\es\" />
+    <Folder Include="app\translations\es\LC_MESSAGES\" />
+    <Folder Include="app\translations\pt\" />
+    <Folder Include="app\translations\pt\LC_MESSAGES\" />
     <Folder Include="db_repository" />
     <Folder Include="db_repository\versions" />
     <Folder Include="scrapers" />

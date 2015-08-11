@@ -25,7 +25,7 @@ def index(page=1):
 		db.session.commit()
 		flash(gettext('Your post is now live!'))
 		return redirect(url_for('index'))
-    projetos = Projeto.query.all()
+    #projetos = Projeto.query.all()
 	posts = g.user.followed_posts().paginate(page, POSTS_PER_PAGE, False)
 	return render_template('index.html',
 						   title='Home',

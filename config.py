@@ -8,8 +8,10 @@ SECRET_KEY = 'you-will-never-guess'
 
 #Searching
 WHOOSH_BASE = os.path.join(basedir, 'search.db')
+
 # Whoosh does not work on Heroku
-#WHOOSH_ENABLED = os.environ.get('HEROKU') is None
+WHOOSH_ENABLED = os.environ.get('HEROKU') is None
+
 MAX_SEARCH_RESULTS = 50
 
 # mail server settings
@@ -39,7 +41,11 @@ OAUTH_CREDENTIALS = {
     }
 }
 
-SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
+if os.environ.get('DATABASE_URL') is None:
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
+else:
+    SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
+
 SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
 
 LANGUAGES = {

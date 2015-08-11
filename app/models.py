@@ -3,9 +3,16 @@ from hashlib import md5
 import re
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager, UserMixin, login_user, logout_user, current_user
+from config import WHOOSH_ENABLED
 
+import sys
+if sys.version_info >= (3, 0):
+    enable_search = False
+else:
+    enable_search = WHOOSH_ENABLED
+    if enable_search:
+        import flask.ext.whooshalchemy as whooshalchemy
 
-#from config import WHOOSH_ENABLED
 
 
 lm = LoginManager(app)
@@ -117,14 +124,6 @@ class User(UserMixin,db.Model):
     #        return str(self.id)  # python 3
 
     
-
-
-import sys
-if sys.version_info >= (3, 0):
-    enable_search = False
-else:
-    enable_search = True
-    import flask.ext.whooshalchemy as whooshalchemy
 
 class Post(db.Model):
     __searchable__ = ['body']
