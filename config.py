@@ -34,10 +34,18 @@ ADMINS = ['palaciowagner@yahoo.com.br']
 #    {'name': 'MyOpenID', 'url': 'https://www.myopenid.com'}]
 	
 
+if os.environ.get('HEROKU') is not None:
+    id = '1603622893225211'
+    secret = '7a3989113f51e25916e51e2936692167'
+else:
+    id = '1608245126096321'
+    secret = '320e1f2a64de3e9bdeee980e1e6a281c'
+
 OAUTH_CREDENTIALS = {
     'facebook': {
-        'id': '1603622893225211',
-        'secret': '7a3989113f51e25916e51e2936692167'
+
+        'id': id,
+        'secret': secret
     }
 }
 

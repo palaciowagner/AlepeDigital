@@ -5,8 +5,8 @@ from scrapy import signals
 from scrapy.xlib.pydispatch import dispatcher
 
 
-class DeputadosSpider(scrapy.Spider):
-    name = "deputados"
+class DeputysSpider(scrapy.Spider):
+    name = "Deputys"
     allowed_domains = ["alepe.pe.gov.br"]
     start_urls = (
         'http://www.alepe.pe.gov.br/',
@@ -14,7 +14,7 @@ class DeputadosSpider(scrapy.Spider):
 
     def parse(self, response):
         sel = Selector(response)
-        sites = sel.xpath('//select[@id="porDeputado"]/option')
+        sites = sel.xpath('//select[@id="porDeputy"]/option')
         for site in sites:
             value = site.xpath('@value').extract()
             desc = site.xpath('text()').extract()

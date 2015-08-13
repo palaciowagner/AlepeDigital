@@ -5389,3 +5389,13 @@ C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\Extensions\Micro
 2015-08-11T00:15:54: Saving group "C:\AlepeDigital\flask\Lib\site-packages\psycopg2-2.6.1-py2.7-win-amd64.egg\psycopg2"
 2015-08-11T00:15:54: End of group "C:\AlepeDigital\flask\Lib\site-packages\psycopg2-2.6.1-py2.7-win-amd64.egg\psycopg2"
 2015-08-11T00:15:58: Deleting 0 files
+
+2015-08-13T01:46:39: Start analysis
+2015-08-13T01:46:39: [WARNING] Library was set explicitly - skipping path detection
+2015-08-13T01:46:39: IncludeModulesFromModulePath = win32com
+2015-08-13T01:46:48: Deleting 0 files
+
+2015-08-13T02:03:42: Start analysis
+2015-08-13T02:03:42: [WARNING] Library was set explicitly - skipping path detection
+2015-08-13T02:03:42: IncludeModulesFromModulePath = win32com
+2015-08-13T02:03:55: Deleting 0 files

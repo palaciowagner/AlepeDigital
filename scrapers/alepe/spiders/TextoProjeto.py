@@ -3,9 +3,9 @@ import scrapy
 from scrapy.selector import Selector
 
 
-class TextoProjetoSpider(scrapy.Spider):
+class TextoProjectSpider(scrapy.Spider):
 
-    name = "textoprojeto"
+    name = "textproject"
     allowed_domains = ["alepe.pe.gov.br"]
     start_urls = []
     result = None
@@ -17,5 +17,5 @@ class TextoProjetoSpider(scrapy.Spider):
         print self.start_urls
         sel = Selector(response)
         self.result = sel.xpath('//div[@id="tituloGeralInternas"/text()]')
-        # //*[@id="textoConteudo"]/table/tbody/tr/td[1]
+        # //*[@id="textConteudo"]/table/tbody/tr/td[1]
         print self.result

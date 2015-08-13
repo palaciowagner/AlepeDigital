@@ -3,7 +3,7 @@ from scrapy.crawler import Crawler
 from scrapy.settings import Settings
 from scrapy import log, signals
 from scrapy.xlib.pydispatch import dispatcher
-from alepe.spiders.TextoProjeto import TextoProjetoSpider
+from alepe.spiders.TextoProject import TextoProjectSpider
 
 def stop_reactor():
     reactor.stop()
@@ -11,9 +11,9 @@ def stop_reactor():
 dispatcher.connect(stop_reactor, signal=signals.spider_closed)
 
 
-texto = TextoProjetoSpider()
+text = TextoProjectSpider()
 crawler = Crawler(Settings())
 crawler.configure()
-crawler.crawl(texto)
+crawler.crawl(text)
 crawler.start()
 reactor.run()

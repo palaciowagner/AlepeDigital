@@ -80,13 +80,13 @@
     <Content Include="app\templates\404.html" />
     <Content Include="app\templates\500.html" />
     <Content Include="app\templates\base.html" />
-    <Content Include="app\templates\deputado.html" />
+    <Content Include="app\templates\deputy.html" />
     <Content Include="app\templates\edit.html" />
     <Content Include="app\templates\flash.html" />
     <Content Include="app\templates\index.html" />
     <Content Include="app\templates\login.html" />
     <Content Include="app\templates\post.html" />
-    <Content Include="app\templates\projeto.html" />
+    <Content Include="app\templates\project.html" />
     <Content Include="app\templates\search_results.html" />
     <Content Include="app\templates\user.html" />
     <Content Include="app\translations\es\LC_MESSAGES\messages.po" />

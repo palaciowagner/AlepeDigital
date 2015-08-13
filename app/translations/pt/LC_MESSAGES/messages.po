@@ -7,19 +7,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-08-05 22:08-0300\n"
-"PO-Revision-Date: 2015-08-04 00:45-0300\n"
+"POT-Creation-Date: 2015-08-13 03:19-0300\n"
+"PO-Revision-Date: 2015-08-13 03:22-0300\n"
 "Last-Translator: \n"
 "Language-Team: pt <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 1.3\n"
+"Language: pt\n"
+"X-Generator: Poedit 1.8.4\n"
 
-#: app/__init__.py:21
+#: app/__init__.py:25
 msgid "Please log in to access this page."
-msgstr ""
+msgstr "Faça o login para acessar esta página."
 
 #: app/forms.py:28
 msgid ""
@@ -33,55 +35,71 @@ msgstr ""
 msgid "This nickname is already in use. Please choose another one."
 msgstr "Este usuário já está em uso. Por favor escolha outro."
 
-#: app/views.py:25
+#: app/views.py:26
 msgid "Your post is now live!"
 msgstr "Sua postagem está online!"
 
-#: app/views.py:60
-msgid "Invalid login. Please try again."
-msgstr "Login inválido. Por favor, tente novamente."
-
-#: app/views.py:107 app/views.py:135
+#: app/views.py:139 app/views.py:167
 #, python-format
 msgid "User %(usr)s not found."
 msgstr "O usuário %(usr)s não foi encontrado."
 
-#: app/views.py:123
+#: app/views.py:155
 msgid "Your changes have been saved."
 msgstr "As suas alterações foram gravadas"
 
-#: app/views.py:138
+#: app/views.py:170
 msgid "You can't follow yourself!"
 msgstr "Você não pode seguir-se!"
 
-#: app/views.py:142
+#: app/views.py:174
 #, python-format
 msgid "Cannot follow %(nick)s."
 msgstr "Você não pode seguir %(nick)s."
 
-#: app/views.py:146
+#: app/views.py:178
 #, python-format
 msgid "You are now following %(nick)s"
 msgstr "Você está agora seguindo %(nick)s"
 
-#: app/views.py:154
+#: app/views.py:201
 #, python-format
 msgid "User %(nick)s not found."
 msgstr "O usuário %(nick)s não foi encontrado."
 
-#: app/views.py:157
+#: app/views.py:204
 msgid "You can't unfollow yourself!"
 msgstr "Você não pode se seguir!"
 
-#: app/views.py:161
+#: app/views.py:208
 #, python-format
 msgid "Cannot unfollow %(nick)s"
 msgstr "Você não pode seguir %(nick)s."
 
-#: app/views.py:165
+#: app/views.py:212
 #, python-format
 msgid "You have stopped following %(nick)s"
 msgstr "Você não está mais seguindo %(nick)s"
+
+#: app/views.py:220 app/views.py:236
+#, python-format
+msgid "Project %(number)s not found."
+msgstr "O Projeto %(number)s não foi encontrado."
+
+#: app/views.py:224 app/views.py:240
+#, python-format
+msgid "Cannot vote for %(project)s project"
+msgstr "Não foi possível votar no projeto %(project)s"
+
+#: app/views.py:228 app/views.py:244
+#, python-format
+msgid "Thanks for voting for %(project)s"
+msgstr "Obrigado por votar no projeto %(project)s"
+
+#: app/views.py:281
+#, python-format
+msgid "Deputy %(usr)s not found."
+msgstr "O deputado %(usr)s não foi encontrado."
 
 #: app/templates/404.html:5
 msgid "File Not Found"
@@ -99,17 +117,27 @@ msgstr "Um erro inesperado ocorreu"
 msgid "The administrator has been notified. Sorry for the inconvenience!"
 msgstr "O administrador foi notificado. Desculpe-nos pela inconveniência!"
 
-#: app/templates/base.html:31
+#: app/templates/base.html:32
 msgid "Home"
 msgstr "Página Inicial"
 
-#: app/templates/base.html:33
+#: app/templates/base.html:34
 msgid "Your Profile"
 msgstr "Seu Perfil"
 
-#: app/templates/base.html:34
+#: app/templates/base.html:35
 msgid "Logout"
 msgstr "Logout"
+
+#: app/templates/deputy.html:19 app/templates/deputy.html:21
+#: app/templates/user.html:30
+msgid "Newer posts"
+msgstr "Postagens mais recentes"
+
+#: app/templates/deputy.html:24 app/templates/deputy.html:26
+#: app/templates/user.html:35
+msgid "Older posts"
+msgstr "Postagens mais antigas"
 
 #: app/templates/edit.html:5
 msgid "Edit Your Profile"
@@ -141,39 +169,52 @@ msgid "Post!"
 msgstr "Postar!"
 
 #: app/templates/index.html:31 app/templates/index.html:33
-#: app/templates/user.html:30 app/templates/user.html:32
-msgid "Newer posts"
-msgstr "Postagens mais recentes"
+#: app/templates/user.html:32
+msgid "Newer projects"
+msgstr "Projects mais recentes"
 
 #: app/templates/index.html:36 app/templates/index.html:38
-#: app/templates/user.html:35 app/templates/user.html:37
-msgid "Older posts"
-msgstr "Postagens mais antigas"
+#: app/templates/user.html:37
+msgid "Older projects"
+msgstr "Projects mais antigos"
 
-#: app/templates/login.html:20
-msgid "Please Sign In"
-msgstr "Por favor, cadaster-se"
+#: app/templates/login.html:21
+msgid "Please sign in"
+msgstr "Por favor, cadastre-se"
 
 #: app/templates/login.html:23
-msgid "Click on your OpenID provider below:"
-msgstr "Clique no fornecedor de OpenID abaixo:"
+msgid "Error"
+msgstr "Erro"
+
+#: app/templates/login.html:29
+msgid "I don't know you!"
+msgstr "Quem é você?"
 
 #: app/templates/login.html:30
-msgid "Or enter your OpenID here:"
-msgstr "Ou insira seu OpenID aqui:"
-
-#: app/templates/login.html:41
-msgid "Remember Me"
-msgstr "Lembrar de Mim"
-
-#: app/templates/login.html:47
-msgid "Sign In"
-msgstr "Cadastre-se"
+msgid "Login with Facebook"
+msgstr "Faça login com o Facebook"
 
 #: app/templates/post.html:6
 #, python-format
 msgid "%(nickname)s said %(when)s:"
 msgstr "%(nickname)s disse %(when)s:"
+
+#: app/templates/post.html:9
+msgid "Delete"
+msgstr "Apagar"
+
+#: app/templates/project.html:6
+#, python-format
+msgid "Project de lei %(nameProject)s criado por %(nameDep)s %(quando)s:"
+msgstr "Project de lei %(nameProject)s criado por %(nameDep)s %(quando)s:"
+
+#: app/templates/project.html:8
+msgid "Yes"
+msgstr "Sim"
+
+#: app/templates/project.html:9
+msgid "No"
+msgstr "Não"
 
 #: app/templates/search_results.html:5
 #, python-format
@@ -183,10 +224,6 @@ msgstr "Resultados da pesquisa para \"%(query)s\":"
 #: app/templates/user.html:13
 msgid "Last seen:"
 msgstr "Visto pela última vez em:"
-
-#: app/templates/user.html:15
-msgid "Followers:"
-msgstr "Seguidores:"
 
 #: app/templates/user.html:15
 msgid "Following:"
@@ -204,3 +241,23 @@ msgstr "Seguir"
 msgid "Unfollow"
 msgstr "Deixar de seguir"
 
+#~ msgid "Invalid login. Please try again."
+#~ msgstr "Login inválido. Por favor, tente novamente."
+
+#~ msgid "Please Sign In"
+#~ msgstr "Por favor, cadaster-se"
+
+#~ msgid "Click on your OpenID provider below:"
+#~ msgstr "Clique no fornecedor de OpenID abaixo:"
+
+#~ msgid "Or enter your OpenID here:"
+#~ msgstr "Ou insira seu OpenID aqui:"
+
+#~ msgid "Remember Me"
+#~ msgstr "Lembrar de Mim"
+
+#~ msgid "Sign In"
+#~ msgstr "Cadastre-se"
+
+#~ msgid "Followers:"
+#~ msgstr "Seguidores:"

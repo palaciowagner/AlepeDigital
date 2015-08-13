@@ -1,0 +1,13 @@
+﻿<table class="table table-hover">
+    <tr>
+        <td width="70px"><a href="{{url_for('deputy', name = project.deputy.name)}}"><img src="{{project.deputy.avatar(70)}}" /></a></td>
+        <td>
+            {% autoescape false %}
+            <p>{{ _('Projeto de lei %(nameProject)s criado por %(nameDep)s %(quando)s:', nameDep = '<a href="%s">%s</a>' % (url_for('deputy', name = project.deputy.name), project.deputy.name), nameProject = project.name, quando = momentjs(project.publishDate).fromNow()) }}</p>
+            {% endautoescape %}
+            <div><a href="{{ url_for('yes', projectNumber=project.number.encode('ascii','ignore')) }}">{{ _('Yes') }}</a></div>
+            <div><a href="{{ url_for('no', projectNumber=project.number.encode('ascii','ignore')) }}">{{ _('No') }}</a></div>
+            <p><strong>{{project.text}}</strong></p>
+        </td>
+    </tr>
+</table>

@@ -8,17 +8,17 @@ from scrapy.http import Request
 from scrapy.utils.project import get_project_settings
 import scrapy
 from scrapy.selector import Selector
-from alepe.spiders.TextoProjeto import TextoProjetoSpider
+from alepe.spiders.TextoProject import TextoProjectSpider
 from alepe.spiders.CrawlerWorker import CrawlerWorker
 from multiprocessing.queues import Queue
 
 
-#from alepe.items import ProjetoItem
+#from alepe.items import ProjectItem
 
 
-texto_urls = []
-class ProjetosSpider(scrapy.Spider):
-    name = "projetos"
+text_urls = []
+class ProjectsSpider(scrapy.Spider):
+    name = "projects"
     allowed_domains = ["alepe.pe.gov.br"]
     start_urls = ["http://www.alepe.pe.gov.br/paginas/?id=3597&catindex=&pagina=1","http://www.alepe.pe.gov.br/paginas/?id=3597&catindex=&pagina=2", ]
 
@@ -33,7 +33,7 @@ class ProjetosSpider(scrapy.Spider):
     #     crawler.signals.connect(reactor.stop, signal=signals.spider_closed)
     #     crawler.configure()
     #     # spider = crawler.spiders.create(spider_name)
-    #     spider_name = TextoProjetoSpider(link)
+    #     spider_name = TextoProjectSpider(link)
     #
     #     crawler.crawl(spider_name)
     #
@@ -41,40 +41,40 @@ class ProjetosSpider(scrapy.Spider):
     #     reactor.run()
     #
     #
-    #     # texto.start_urls.remove(link)
+    #     # text.start_urls.remove(link)
 
 
     def parse(self, response):
         sel = Selector(response)
 
-        projetos = sel.xpath('//table/tr[@class!="titulo"]')
+        projects = sel.xpath('//table/tr[@class!="titulo"]')
 
-        for projeto in projetos:
-            link = str(projeto.xpath('td[1]/a/@href').extract()[0])
+        for project in projects:
+            link = str(project.xpath('td[1]/a/@href').extract()[0])
             link = link.replace("..","http://www.alepe.pe.gov.br")
-            texto_urls.append(link)
+            text_urls.append(link)
 
 
 
             docid = link.split("=")[-1]
-            numero = link.split("=")[-2][:-6]
+            number = link.split("=")[-2][:-6]
 
-            proposicao = projeto.xpath('td[1]/a/text()').extract()
-            autor = projeto.xpath('td[2]/text()').extract()
-            situacao = projeto.xpath('td[3]/text()').extract()
+            proposicao = project.xpath('td[1]/a/text()').extract()
+            autor = project.xpath('td[2]/text()').extract()
+            situacao = project.xpath('td[3]/text()').extract()
 
-            print docid, numero, proposicao[0], autor[0],situacao[0]
-            print "DOCID:" + docid+ "\nNUMERO: "+numero+"\nPROPOSICAO: "+proposicao[0]+"\nAUTOR: "+autor[0]+"\nSITUACAO: "+situacao[0]+"\n\n"
+            print docid, number, proposicao[0], autor[0],situacao[0]
+            print "DOCID:" + docid+ "\nNUMERO: "+number+"\nPROPOSICAO: "+proposicao[0]+"\nAUTOR: "+autor[0]+"\nSITUACAO: "+situacao[0]+"\n\n"
 
 
 
-texto = TextoProjetoSpider(texto_urls)
+text = TextoProjectSpider(text_urls)
 settings = get_project_settings()
 crawler = Crawler(settings)
 crawler.signals.connect(reactor.stop, signal=signals.spider_closed)
 crawler.configure()
 
-crawler.crawl(texto)
+crawler.crawl(text)
 crawler.start()
 
 reactor.run()

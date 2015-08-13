@@ -2,7 +2,7 @@
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from app import app, db, lm, babel
 from .forms import LoginForm, EditForm, PostForm, SearchForm
-from .models import User, Post, Deputado, Projeto
+from .models import User, Post, Deputy, Project
 from datetime import datetime
 from config import POSTS_PER_PAGE, MAX_SEARCH_RESULTS,LANGUAGES
 from flask.ext.babel import gettext
@@ -18,18 +18,22 @@ def get_locale():
 @app.route('/index/<int:page>', methods=['GET', 'POST'])
 #@login_required
 def index(page=1):
-	form = PostForm()
-	if form.validate_on_submit():
+    form = PostForm()
+    if form.validate_on_submit():
 		post = Post(body=form.post.data, timestamp=datetime.utcnow(), author=g.user)
 		db.session.add(post)
 		db.session.commit()
 		flash(gettext('Your post is now live!'))
-		return redirect(url_for('index'))
-	projetos = g.user.followed_projetos().paginate(page, POSTS_PER_PAGE, False)
-	return render_template('index.html',
-						   title='Home',
-						   form=form,
-						   projetos=projetos)
+		return redirect(url_for('index'))   
+    
+    if g.user is not None and g.user.is_authenticated():
+        projects = g.user.followed_projects().paginate(page, POSTS_PER_PAGE, False)
+        return render_template('index.html',
+						       title='Home',
+						       form=form,
+						       projects=projects)
+    else:
+        return redirect(url_for('login'))
 
 						   
 ##Load User function						   
@@ -208,6 +212,38 @@ def unfollow(nickname):
 	flash(gettext('You have stopped following %(nick)s', nick=nickname ))
 	return redirect(url_for('user', nickname=nickname))
 
+@app.route('/vote/yes/<projectNumber>')
+@login_required
+def yes(projectNumber):
+    project = Project.query.filter_by(number=projectNumber).first()
+    if project is None:
+        flash(gettext('Project %(number)s not found.', number = projectNumber))
+        return redirect(url_for('index'))
+    p = project.yes(g.user)
+    if p is None:
+        flash(gettext('Cannot vote for %(project)s project', project=projectNumber ))
+        return redirect(url_for('index'))
+    db.session.add(p)
+    db.session.commit()
+    flash(gettext('Thanks for voting for %(project)s', project=projectNumber ))
+    return redirect(url_for('index'))
+
+@app.route('/vote/no/<projectNumber>')
+@login_required
+def no(projectNumber):
+    project = Project.query.filter_by(number=projectNumber).first()
+    if project is None:
+        flash(gettext('Project %(number)s not found.', number = projectNumber))
+        return redirect(url_for('index'))
+    p = project.no(g.user)
+    if p is None:
+        flash(gettext('Cannot vote for %(project)s project', project=projectNumber ))
+        return redirect(url_for('index'))
+    db.session.add(p)
+    db.session.commit()
+    flash(gettext('Thanks for voting for %(project)s', project=projectNumber ))
+    return redirect(url_for('index'))
+
 #####ERROR HANDLERS######
 @app.errorhandler(404)
 def not_found_error(error):
@@ -234,20 +270,20 @@ def search_results(query):
 						   results=results)
 
 
-##View de Deputado
-@app.route('/deputado/<nome>')
-@app.route('/deputado/<nome>/<int:page>')
+##View de Deputy
+@app.route('/deputy/<name>')
+@app.route('/deputy/<name>/<int:page>')
 @login_required
-def deputado(nome, page=1):
+def deputy(name, page=1):
     
-	deputado = Deputado.query.filter_by(nome=nome).first()
-	if deputado == None:
-		flash(gettext('Deputy %(usr)s not found.', usr=nome))
+	deputy = Deputy.query.filter_by(name=name).first()
+	if deputy == None:
+		flash(gettext('Deputy %(usr)s not found.', usr=name))
 		return redirect(url_for('index'))
-	projetos = deputado.projetos.paginate(page, POSTS_PER_PAGE, False)
-	return render_template('deputado.html',
-						   deputado=deputado,
-						   projetos=projetos)
+	projects = deputy.projects.paginate(page, POSTS_PER_PAGE, False)
+	return render_template('deputy.html',
+						   deputy=deputy,
+						   projects=projects)
 
 if __name__ == '__main__':
     db.create_all()

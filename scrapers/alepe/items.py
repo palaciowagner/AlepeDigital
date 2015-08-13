@@ -13,7 +13,7 @@ class AlepeItem(scrapy.Item):
     # name = scrapy.Field()
     pass
 
-class ProjetoItem(scrapy.Item):
+class ProjectItem(scrapy.Item):
     proposicao = scrapy.Field()
     autor = scrapy.Field()
     situacao = scrapy.Field()

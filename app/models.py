@@ -19,7 +19,13 @@ lm = LoginManager(app)
 
 followers = db.Table('followers',
     db.Column('follower_id', db.Integer, db.ForeignKey('user.id')),
-    db.Column('followed_id', db.Integer, db.ForeignKey('deputado.id'))
+    db.Column('followed_id', db.Integer, db.ForeignKey('deputy.id'))
+)
+
+votes = db.Table('votes',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+    db.Column('project_number', db.String(20), db.ForeignKey('project.number')),
+    db.Column('voted_yes', db.Boolean)
 )
 
 class User(UserMixin,db.Model):
@@ -31,40 +37,16 @@ class User(UserMixin,db.Model):
     posts = db.relationship('Post', backref='author', lazy='dynamic')
     about_me = db.Column(db.String(140))
     last_seen = db.Column(db.DateTime)
-    followed = db.relationship('Deputado',
+    followed = db.relationship('Deputy',
                                secondary=followers,
                                primaryjoin=(followers.c.follower_id == id),
                                backref=db.backref('followers', lazy='dynamic'),
                                lazy='dynamic')
+    
 
     @lm.user_loader
     def load_user(id):
         return User.query.get(int(id))
-
-    #@app.route('/authorize/<provider>')
-    #def oauth_authorize(provider):
-    #    if not current_user.is_anonymous():
-    #        return redirect(url_for('index'))
-    #    oauth = OAuthSignIn.get_provider(provider)
-    #    return oauth.authorize()
-
-    #@app.route('/callback/<provider>')
-    #def oauth_callback(provider):
-    #    if not current_user.is_anonymous():
-    #        return redirect(url_for('index'))
-    #    oauth = OAuthSignIn.get_provider(provider)
-    #    social_id, username, email = oauth.callback()
-    #    if social_id is None:
-    #        flash('Authentication failed.')
-    #        return redirect(url_for('index'))
-    #    user = User.query.filter_by(social_id=social_id).first()
-    #    if not user:
-    #        user = User(social_id=social_id, nickname=username, email=email)
-    #        db.session.add(user)
-    #        db.session.commit()
-    #    login_user(user, True)
-    #    return redirect(url_for('index'))
-
 
     def is_authenticated(self):
         return True
@@ -94,22 +76,22 @@ class User(UserMixin,db.Model):
     def make_valid_nickname(nickname):
         return re.sub('[^a-zA-Z0-9_\.]', '', nickname)
 
-    def follow(self, deputado):
-        if not self.is_following(deputado):
-            self.followed.append(deputado)
+    def follow(self, deputy):
+        if not self.is_following(deputy):
+            self.followed.append(deputy)
             return self
 
-    def unfollow(self, deputado):
-        if self.is_following(deputado):
-            self.followed.remove(deputado)
+    def unfollow(self, deputy):
+        if self.is_following(deputy):
+            self.followed.remove(deputy)
             return self
 
-    def is_following(self, deputado):
-        return self.followed.filter(followers.c.followed_id == deputado.id).count() > 0
+    def is_following(self, deputy):
+        return self.followed.filter(followers.c.followed_id == deputy.id).count() > 0
 
-    def followed_projetos(self):
-        return Projeto.query.join(followers, (followers.c.followed_id == Projeto.deputado_id)).filter(followers.c.follower_id == self.id).order_by(Projeto.dataPublicacao.desc())
-       
+    def followed_projects(self):
+        return Project.query.join(followers, (followers.c.followed_id == Project.deputy_id)).filter(followers.c.follower_id == self.id).order_by(Project.publishDate.desc())
+           
     def __repr__(self):
         return '<User %r>' % (self.nickname)
 
@@ -132,39 +114,74 @@ class Post(db.Model):
     def __repr__(self):
         return '<Post %r>' % (self.body)
 
-class Deputado(db.Model):
+class Deputy(db.Model):
 
-    __searchable__ = ['nome']
+    __searchable__ = ['name']
 
     id = db.Column(db.Integer, primary_key=True)
-    nome = db.Column(db.String(50))
-    partido = db.Column(db.String(10))
+    name = db.Column(db.String(50))
+    party = db.Column(db.String(10))
     email = db.Column(db.String(50))
-    profissao = db.Column(db.String(60))
-    telefone = db.Column(db.String(20))
-    biografia = db.Column(db.String(300))
-    projetos = db.relationship('Projeto', backref='deputado', lazy='dynamic')
+    job = db.Column(db.String(60))
+    phone = db.Column(db.String(20))
+    bio = db.Column(db.String(300))
+    projects = db.relationship('Project', backref='deputy', lazy='dynamic')
     
-
+    
     def avatar(self, size):
             return 'http://www.gravatar.com/avatar/%s?d=mm&s=%d' % (md5(self.email.encode('utf-8')).hexdigest(), size)
 
     def __repr__(self):
-        return '<Deputado %r>' % (self.nome)
+        return '<Deputy %r>' % (self.name)
 
-class Projeto(db.Model):
+class Project(db.Model):
 
-    __searchable__ = ['nome','texto']
+    __searchable__ = ['name','text']
 
-    numero = db.Column(db.String(20), primary_key=True)
-    nome = db.Column(db.String(50))
-    texto = db.Column(db.String(200))
+    number = db.Column(db.String(20), primary_key=True)
+    name = db.Column(db.String(50))
+    text = db.Column(db.String(200))
     status = db.Column(db.String(10))
-    dataPublicacao = db.Column(db.DateTime)
-    deputado_id = db.Column(db.Integer, db.ForeignKey('deputado.id'))
+    publishDate = db.Column(db.DateTime)
+    votesYes = db.Column(db.Integer, default=0)
+    votesNo = db.Column(db.Integer, default=0)
+    deputy_id = db.Column(db.Integer, db.ForeignKey('deputy.id'))
+    voted_by = db.relationship('User',
+                           secondary=votes,
+                           primaryjoin=(votes.c.project_number == number),
+                           backref = db.backref('voted_on', lazy = 'dynamic'),
+                           lazy = 'dynamic')
+
+    def yes(self, user):
+        if self.has_voted(user):
+            if not self.voted_yes(user):
+                self.votesYes += 1
+                self.votesNo -= 1
+                                
+        else:
+            self.voted_by.append(user)
+            self.votesYes += 1            
+        return self
+
+    def no(self, user):
+        if self.has_voted(user):
+            if self.voted_yes(user):
+                self.votesNo += 1
+                self.votesYes -= 1
+                
+        else:
+            self.voted_by.append(user)
+            self.votesNo += 1
+        return self
+        
+    def has_voted(self, user):
+        return self.voted_by.filter(votes.c.user_id == user.id).count() > 0
+
+    def voted_yes(self,user):
+        return self.voted_by.filter(votes.c.user_id == user.id, votes.c.voted_yes == True).count() > 0
 
     def __repr__(self):
-        return '<Projeto %r>' % (self.numero)
+        return '<Project %r>' % (self.number)
 #enable_search = WHOOSH_ENABLED
 #if enable_search:
 #    import flask.ext.whooshalchemy as whooshalchemy
