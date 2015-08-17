@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-08-13 03:19-0300\n"
+"POT-Creation-Date: 2015-08-17 02:31-0300\n"
 "PO-Revision-Date: 2015-08-04 00:28-0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: es <LL@li.org>\n"
@@ -36,7 +36,7 @@ msgstr ""
 msgid "Your post is now live!"
 msgstr ""
 
-#: app/views.py:139 app/views.py:167
+#: app/views.py:139
 #, python-format
 msgid "User %(usr)s not found."
 msgstr ""
@@ -45,55 +45,47 @@ msgstr ""
 msgid "Your changes have been saved."
 msgstr ""
 
-#: app/views.py:170
-msgid "You can't follow yourself!"
-msgstr ""
-
-#: app/views.py:174
+#: app/views.py:168 app/views.py:185
 #, python-format
-msgid "Cannot follow %(nick)s."
+msgid "Deputy %(dep)s not found."
 msgstr ""
 
-#: app/views.py:178
+#: app/views.py:173
 #, python-format
-msgid "You are now following %(nick)s"
+msgid "Cannot follow %(dep)s."
 msgstr ""
 
-#: app/views.py:201
+#: app/views.py:177
 #, python-format
-msgid "User %(nick)s not found."
+msgid "You are now following %(dep)s"
 msgstr ""
 
-#: app/views.py:204
-msgid "You can't unfollow yourself!"
-msgstr ""
-
-#: app/views.py:208
+#: app/views.py:190
 #, python-format
-msgid "Cannot unfollow %(nick)s"
+msgid "Cannot unfollow %(dep)s."
 msgstr ""
 
-#: app/views.py:212
+#: app/views.py:194
 #, python-format
-msgid "You have stopped following %(nick)s"
+msgid "You have stopped following %(dep)s"
 msgstr ""
 
-#: app/views.py:220 app/views.py:236
+#: app/views.py:220 app/views.py:238
 #, python-format
 msgid "Project %(number)s not found."
 msgstr ""
 
-#: app/views.py:224 app/views.py:240
+#: app/views.py:225 app/views.py:243
 #, python-format
 msgid "Cannot vote for %(project)s project"
 msgstr ""
 
-#: app/views.py:228 app/views.py:244
+#: app/views.py:230 app/views.py:248
 #, python-format
 msgid "Thanks for voting for %(project)s"
 msgstr ""
 
-#: app/views.py:281
+#: app/views.py:293
 #, python-format
 msgid "Deputy %(usr)s not found."
 msgstr ""
@@ -118,20 +110,42 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
-#: app/templates/base.html:34
-msgid "Your Profile"
+#: app/templates/base.html:33
+msgid "Deputies"
 msgstr ""
 
 #: app/templates/base.html:35
+msgid "Your Profile"
+msgstr ""
+
+#: app/templates/base.html:36
 msgid "Logout"
 msgstr ""
 
-#: app/templates/deputy.html:19 app/templates/deputy.html:21
+#: app/templates/deputados.html:13
+#, python-format
+msgid "Deputy %(name)s - %(party)s:"
+msgstr ""
+
+#: app/templates/deputados.html:17
+#, python-format
+msgid "Projects: %(quantity)s"
+msgstr ""
+
+#: app/templates/deputy.html:12 app/templates/user.html:19
+msgid "Follow"
+msgstr ""
+
+#: app/templates/deputy.html:14 app/templates/user.html:21
+msgid "Unfollow"
+msgstr ""
+
+#: app/templates/deputy.html:24 app/templates/deputy.html:26
 #: app/templates/user.html:30
 msgid "Newer posts"
 msgstr ""
 
-#: app/templates/deputy.html:24 app/templates/deputy.html:26
+#: app/templates/deputy.html:29 app/templates/deputy.html:31
 #: app/templates/user.html:35
 msgid "Older posts"
 msgstr ""
@@ -202,7 +216,7 @@ msgstr ""
 
 #: app/templates/project.html:6
 #, python-format
-msgid "Project de lei %(nameProject)s criado por %(nameDep)s %(quando)s:"
+msgid "Projeto de lei %(nameProject)s criado por %(nameDep)s %(quando)s:"
 msgstr ""
 
 #: app/templates/project.html:8
@@ -230,14 +244,6 @@ msgstr ""
 msgid "Edit your profile"
 msgstr ""
 
-#: app/templates/user.html:19
-msgid "Follow"
-msgstr ""
-
-#: app/templates/user.html:21
-msgid "Unfollow"
-msgstr ""
-
 #~ msgid "Invalid login. Please try again."
 #~ msgstr ""
 
@@ -257,5 +263,29 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Followers:"
+#~ msgstr ""
+
+#~ msgid "You can't follow yourself!"
+#~ msgstr ""
+
+#~ msgid "Cannot follow %(nick)s."
+#~ msgstr ""
+
+#~ msgid "You are now following %(nick)s"
+#~ msgstr ""
+
+#~ msgid "User %(nick)s not found."
+#~ msgstr ""
+
+#~ msgid "You can't unfollow yourself!"
+#~ msgstr ""
+
+#~ msgid "Cannot unfollow %(nick)s"
+#~ msgstr ""
+
+#~ msgid "You have stopped following %(nick)s"
+#~ msgstr ""
+
+#~ msgid "Project de lei %(nameProject)s criado por %(nameDep)s %(quando)s:"
 #~ msgstr ""
 

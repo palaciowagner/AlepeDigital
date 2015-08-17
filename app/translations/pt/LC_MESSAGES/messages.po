@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2015-08-13 03:19-0300\n"
-"PO-Revision-Date: 2015-08-13 03:22-0300\n"
+"POT-Creation-Date: 2015-08-17 02:31-0300\n"
+"PO-Revision-Date: 2015-08-17 02:34-0300\n"
 "Last-Translator: \n"
 "Language-Team: pt <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -39,7 +39,7 @@ msgstr "Este usuário já está em uso. Por favor escolha outro."
 msgid "Your post is now live!"
 msgstr "Sua postagem está online!"
 
-#: app/views.py:139 app/views.py:167
+#: app/views.py:139
 #, python-format
 msgid "User %(usr)s not found."
 msgstr "O usuário %(usr)s não foi encontrado."
@@ -48,55 +48,47 @@ msgstr "O usuário %(usr)s não foi encontrado."
 msgid "Your changes have been saved."
 msgstr "As suas alterações foram gravadas"
 
-#: app/views.py:170
-msgid "You can't follow yourself!"
-msgstr "Você não pode seguir-se!"
-
-#: app/views.py:174
+#: app/views.py:168 app/views.py:185
 #, python-format
-msgid "Cannot follow %(nick)s."
-msgstr "Você não pode seguir %(nick)s."
+msgid "Deputy %(dep)s not found."
+msgstr "O deputado %(dep)s não foi encontrado."
 
-#: app/views.py:178
+#: app/views.py:173
 #, python-format
-msgid "You are now following %(nick)s"
-msgstr "Você está agora seguindo %(nick)s"
+msgid "Cannot follow %(dep)s."
+msgstr "Você não pode seguir %(dep)s."
 
-#: app/views.py:201
+#: app/views.py:177
 #, python-format
-msgid "User %(nick)s not found."
-msgstr "O usuário %(nick)s não foi encontrado."
+msgid "You are now following %(dep)s"
+msgstr "Você agora está seguindo %(dep)s"
 
-#: app/views.py:204
-msgid "You can't unfollow yourself!"
-msgstr "Você não pode se seguir!"
-
-#: app/views.py:208
+#: app/views.py:190
 #, python-format
-msgid "Cannot unfollow %(nick)s"
-msgstr "Você não pode seguir %(nick)s."
+msgid "Cannot unfollow %(dep)s."
+msgstr "Você não pode deixar de seguir %(dep)s."
 
-#: app/views.py:212
+#: app/views.py:194
 #, python-format
-msgid "You have stopped following %(nick)s"
-msgstr "Você não está mais seguindo %(nick)s"
+msgid "You have stopped following %(dep)s"
+msgstr "Você não está mais seguindo %(dep)s"
 
-#: app/views.py:220 app/views.py:236
+#: app/views.py:220 app/views.py:238
 #, python-format
 msgid "Project %(number)s not found."
 msgstr "O Projeto %(number)s não foi encontrado."
 
-#: app/views.py:224 app/views.py:240
+#: app/views.py:225 app/views.py:243
 #, python-format
 msgid "Cannot vote for %(project)s project"
 msgstr "Não foi possível votar no projeto %(project)s"
 
-#: app/views.py:228 app/views.py:244
+#: app/views.py:230 app/views.py:248
 #, python-format
 msgid "Thanks for voting for %(project)s"
 msgstr "Obrigado por votar no projeto %(project)s"
 
-#: app/views.py:281
+#: app/views.py:293
 #, python-format
 msgid "Deputy %(usr)s not found."
 msgstr "O deputado %(usr)s não foi encontrado."
@@ -121,20 +113,42 @@ msgstr "O administrador foi notificado. Desculpe-nos pela inconveniência!"
 msgid "Home"
 msgstr "Página Inicial"
 
-#: app/templates/base.html:34
+#: app/templates/base.html:33
+msgid "Deputies"
+msgstr "Deputados"
+
+#: app/templates/base.html:35
 msgid "Your Profile"
 msgstr "Seu Perfil"
 
-#: app/templates/base.html:35
+#: app/templates/base.html:36
 msgid "Logout"
 msgstr "Logout"
 
-#: app/templates/deputy.html:19 app/templates/deputy.html:21
+#: app/templates/deputados.html:13
+#, python-format
+msgid "Deputy %(name)s - %(party)s:"
+msgstr "Deputado %(name)s - %(party)s:"
+
+#: app/templates/deputados.html:17
+#, python-format
+msgid "Projects: %(quantity)s"
+msgstr "Projetos: %(quantity)s"
+
+#: app/templates/deputy.html:12 app/templates/user.html:19
+msgid "Follow"
+msgstr "Seguir"
+
+#: app/templates/deputy.html:14 app/templates/user.html:21
+msgid "Unfollow"
+msgstr "Deixar de seguir"
+
+#: app/templates/deputy.html:24 app/templates/deputy.html:26
 #: app/templates/user.html:30
 msgid "Newer posts"
 msgstr "Postagens mais recentes"
 
-#: app/templates/deputy.html:24 app/templates/deputy.html:26
+#: app/templates/deputy.html:29 app/templates/deputy.html:31
 #: app/templates/user.html:35
 msgid "Older posts"
 msgstr "Postagens mais antigas"
@@ -171,12 +185,12 @@ msgstr "Postar!"
 #: app/templates/index.html:31 app/templates/index.html:33
 #: app/templates/user.html:32
 msgid "Newer projects"
-msgstr "Projects mais recentes"
+msgstr "Projetos mais recentes"
 
 #: app/templates/index.html:36 app/templates/index.html:38
 #: app/templates/user.html:37
 msgid "Older projects"
-msgstr "Projects mais antigos"
+msgstr "Projetos mais antigos"
 
 #: app/templates/login.html:21
 msgid "Please sign in"
@@ -205,8 +219,8 @@ msgstr "Apagar"
 
 #: app/templates/project.html:6
 #, python-format
-msgid "Project de lei %(nameProject)s criado por %(nameDep)s %(quando)s:"
-msgstr "Project de lei %(nameProject)s criado por %(nameDep)s %(quando)s:"
+msgid "Projeto de lei %(nameProject)s criado por %(nameDep)s %(quando)s:"
+msgstr "Projeto de lei %(nameProject)s criado por %(nameDep)s %(quando)s:"
 
 #: app/templates/project.html:8
 msgid "Yes"
@@ -233,14 +247,6 @@ msgstr "Seguindo:"
 msgid "Edit your profile"
 msgstr "Editar perfil"
 
-#: app/templates/user.html:19
-msgid "Follow"
-msgstr "Seguir"
-
-#: app/templates/user.html:21
-msgid "Unfollow"
-msgstr "Deixar de seguir"
-
 #~ msgid "Invalid login. Please try again."
 #~ msgstr "Login inválido. Por favor, tente novamente."
 
@@ -261,3 +267,12 @@ msgstr "Deixar de seguir"
 
 #~ msgid "Followers:"
 #~ msgstr "Seguidores:"
+
+#~ msgid "You can't follow yourself!"
+#~ msgstr "Você não pode seguir-se!"
+
+#~ msgid "User %(nick)s not found."
+#~ msgstr "O usuário %(nick)s não foi encontrado."
+
+#~ msgid "You can't unfollow yourself!"
+#~ msgstr "Você não pode se seguir!"
