@@ -24,6 +24,8 @@ lm = LoginManager(app)
 lm.login_view = 'login'
 lm.login_message = lazy_gettext('Please log in to access this page.')
 
+
+
 class CustomJSONEncoder(JSONEncoder):
     """This class adds support for lazy translation texts to Flask's
     JSON encoder. This is necessary when flashing translated texts."""
