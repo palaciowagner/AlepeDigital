@@ -12,7 +12,7 @@
     {% if user.last_seen %}
     <p><em>{{ _('Last seen:') }} {{ momentjs(user.last_seen).calendar() }}</em></p>
     {% endif %}
-    <p> {{ _('Following:') }} {{user.followed.count() - 1}} |
+    <p> {{ _('Following:') }} {{user.followed.count() -}} |
     {% if user.id == g.user.id %}
         <a href="{{url_for('edit')}}">{{ _('Edit your profile') }}</a>
     {% elif not g.user.is_following(user) %}

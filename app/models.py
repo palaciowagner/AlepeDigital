@@ -22,11 +22,16 @@ followers = db.Table('followers',
     db.Column('followed_id', db.Integer, db.ForeignKey('deputy.id'))
 )
 
-votes = db.Table('votes',
-    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
-    db.Column('project_number', db.String(20), db.ForeignKey('project.number')),
-    db.Column('voted_yes', db.Boolean)
-)
+class Votes(db.Model):
+    __tablename__ = 'votes'
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
+    project_number = db.Column(db.String(20), db.ForeignKey('project.number'), primary_key=True)
+    voted_yes = db.Column(db.Boolean)
+#votes = db.Table('votes',
+#    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+#    db.Column('project_number', db.String(20), db.ForeignKey('project.number')),
+#    db.Column('voted_yes', db.Boolean)
+#)
 
 class User(UserMixin,db.Model):
     
@@ -147,8 +152,8 @@ class Project(db.Model):
     votesNo = db.Column(db.Integer, default=0)
     deputy_id = db.Column(db.Integer, db.ForeignKey('deputy.id'))
     voted_by = db.relationship('User',
-                           secondary=votes,
-                           primaryjoin=(votes.c.project_number == number),
+                           secondary=Votes,
+                           primaryjoin=(Votes.project_number == number),
                            backref = db.backref('voted_on', lazy = 'dynamic'),
                            lazy = 'dynamic')
 
@@ -159,8 +164,10 @@ class Project(db.Model):
                 self.votesNo -= 1
                                 
         else:
-            self.voted_by.append(user)
-            self.votesYes += 1            
+            self.votesYes += 1 
+            if not user in self.voted_by.all():
+                self.voted_by.append(user)
+                       
         return self
 
     def no(self, user):
@@ -170,15 +177,17 @@ class Project(db.Model):
                 self.votesYes -= 1
                 
         else:
-            self.voted_by.append(user)
             self.votesNo += 1
+            if not user in self.voted_by.all():
+                self.voted_by.append(user)
+            
         return self
         
     def has_voted(self, user):
-        return self.voted_by.filter(votes.c.user_id == user.id).count() > 0
+        return self.voted_by.filter(Votes.user_id == user.id).count() > 0
 
     def voted_yes(self,user):
-        return self.voted_by.filter(votes.c.user_id == user.id, votes.c.voted_yes == True).count() > 0
+        return self.voted_by.filter(Votes.user_id == user.id, Votes.voted_yes == True).count() > 0
 
     def __repr__(self):
         return '<Project %r>' % (self.number)

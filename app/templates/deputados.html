@@ -1,0 +1,24 @@
+﻿<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+{% include 'flash.html' %}
+<div class="well well-large" style="height: 80%;">
+    {% for deputado in results %}
+    <table class="table table-hover">
+        <tr>
+            <td width="70px"><a href="{{url_for('deputy', name = deputado.name)}}"><img src="{{deputado.avatar(70)}}" /></a></td>
+            <td>
+                {% autoescape false %}
+                <p>{{ _('Deputy %(name)s - %(party)s:', name = '<a href="%s">%s</a>' % (url_for('deputy', name = deputado.name), deputado.name), party = deputado.party) }}</p>
+                {% endautoescape %}
+                <p><strong>{{deputado.email}}</strong></p>
+                
+                <p>{{ _('Projects: %(quantity)s', quantity = deputado.projects.count() ) }}</p>
+            </td>
+        </tr>
+    </table>
+    {% endfor %}
+</div>
+
+{% endblock %}

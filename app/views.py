@@ -2,7 +2,7 @@
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from app import app, db, lm, babel
 from .forms import LoginForm, EditForm, PostForm, SearchForm
-from .models import User, Post, Deputy, Project
+from .models import User, Post, Deputy, Project, Votes
 from datetime import datetime
 from config import POSTS_PER_PAGE, MAX_SEARCH_RESULTS,LANGUAGES
 from flask.ext.babel import gettext
@@ -212,23 +212,26 @@ def unfollow(nickname):
 	flash(gettext('You have stopped following %(nick)s', nick=nickname ))
 	return redirect(url_for('user', nickname=nickname))
 
-@app.route('/vote/yes/<projectNumber>')
+@app.route('/votar/sim/<projectNumber>')
 @login_required
 def yes(projectNumber):
     project = Project.query.filter_by(number=projectNumber).first()
+
     if project is None:
         flash(gettext('Project %(number)s not found.', number = projectNumber))
         return redirect(url_for('index'))
     p = project.yes(g.user)
+    v = Votes(user_id=g.user.id, project_number=projectNumber, voted_yes=True)
     if p is None:
         flash(gettext('Cannot vote for %(project)s project', project=projectNumber ))
         return redirect(url_for('index'))
     db.session.add(p)
+    db.session.add(v)
     db.session.commit()
     flash(gettext('Thanks for voting for %(project)s', project=projectNumber ))
     return redirect(url_for('index'))
 
-@app.route('/vote/no/<projectNumber>')
+@app.route('/votar/nao/<projectNumber>')
 @login_required
 def no(projectNumber):
     project = Project.query.filter_by(number=projectNumber).first()
@@ -236,10 +239,12 @@ def no(projectNumber):
         flash(gettext('Project %(number)s not found.', number = projectNumber))
         return redirect(url_for('index'))
     p = project.no(g.user)
+    v = Votes(user_id=g.user.id, project_number=projectNumber, voted_yes=True)
     if p is None:
         flash(gettext('Cannot vote for %(project)s project', project=projectNumber ))
         return redirect(url_for('index'))
     db.session.add(p)
+    db.session.add(v)
     db.session.commit()
     flash(gettext('Thanks for voting for %(project)s', project=projectNumber ))
     return redirect(url_for('index'))
@@ -270,9 +275,17 @@ def search_results(query):
 						   results=results)
 
 
+@app.route('/deputados/<query>')
+def deputados(query):
+    if query == 'all':
+        results = Deputy.query.all()
+        return render_template('deputados.html',
+						   query=query,
+						   results=results)
+
 ##View de Deputy
-@app.route('/deputy/<name>')
-@app.route('/deputy/<name>/<int:page>')
+@app.route('/deputado/<name>')
+@app.route('/deputado/<name>/<int:page>')
 @login_required
 def deputy(name, page=1):
     
