@@ -159,24 +159,40 @@ def edit():
 		form.about_me.data = g.user.about_me
 	return render_template('edit.html', form=form)
 
-@app.route('/follow/<nickname>')
+@app.route('/follow/<name>')
 @login_required
-def follow(nickname):
-	user = User.query.filter_by(nickname=nickname).first()
-	if user is None:
-		flash(gettext('User %(usr)s not found.', usr= nickname))
+def follow(name):
+	#user = User.query.filter_by(nickname=nickname).first()
+    deputy = Deputy.query.filter_by(name=name).first()
+    if deputy is None:
+		flash(gettext('Deputy %(dep)s not found.', dep= name))
 		return redirect(url_for('index'))
-	if user == g.user:
-		flash(gettext('You can\'t follow yourself!'))
-		return redirect(url_for('user', nickname=nickname))
-	u = g.user.follow(user)
+   
+    u = g.user.follow(deputy)
+    if u is None:
+		flash(gettext('Cannot follow %(dep)s.', dep=name ))
+		return redirect(url_for('deputy', name=name))
+    db.session.add(u)
+    db.session.commit()
+    flash(gettext('You are now following %(dep)s', dep = name))
+    return redirect(url_for('deputy', name=name))
+
+@app.route('/unfollow/<name>')
+@login_required
+def unfollow(name):
+	deputy = Deputy.query.filter_by(name=name).first()
+	if deputy is None:
+		flash(gettext('Deputy %(dep)s not found.', dep= name))
+		return redirect(url_for('index'))
+	
+	u = g.user.unfollow(deputy)
 	if u is None:
-		flash(gettext('Cannot follow %(nick)s.', nick=nickname ))
-		return redirect(url_for('user', nickname=nickname))
+		flash(gettext('Cannot unfollow %(dep)s.', dep=name ))
+		return redirect(url_for('deputy', name=name))
 	db.session.add(u)
 	db.session.commit()
-	flash(gettext('You are now following %(nick)s', nick = nickname))
-	return redirect(url_for('user', nickname=nickname))
+	flash(gettext('You have stopped following %(dep)s',dep = name ))
+	return redirect(url_for('deputy',name=name))
 
 @app.route('/delete/<int:id>')
 @login_required
@@ -193,24 +209,7 @@ def delete(id):
     flash('Your post has been deleted.')
     return redirect(url_for('index'))
 
-@app.route('/unfollow/<nickname>')
-@login_required
-def unfollow(nickname):
-	user = User.query.filter_by(nickname=nickname).first()
-	if user is None:
-		flash(gettext('User %(nick)s not found.', nick = nickname))
-		return redirect(url_for('index'))
-	if user == g.user:
-		flash(gettext('You can\'t unfollow yourself!'))
-		return redirect(url_for('user', nickname=nickname))
-	u = g.user.unfollow(user)
-	if u is None:
-		flash(gettext('Cannot unfollow %(nick)s', nick=nickname ))
-		return redirect(url_for('user', nickname=nickname))
-	db.session.add(u)
-	db.session.commit()
-	flash(gettext('You have stopped following %(nick)s', nick=nickname ))
-	return redirect(url_for('user', nickname=nickname))
+
 
 @app.route('/votar/sim/<projectNumber>')
 @login_required

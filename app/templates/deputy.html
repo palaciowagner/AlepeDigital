@@ -8,6 +8,11 @@
         <img src="{{deputy.avatar(128)}}" class="img-polaroid">
     </div>
     <h1>{{deputy.name}}</h1>
+    {% if not g.user.is_following(deputy) %}
+    <a href="{{url_for('follow', name = deputy.name.encode('ascii','ignore'))}}">{{ _('Follow') }}</a>
+    {% else %}
+    <a href="{{url_for('unfollow', name = deputy.name.encode('ascii','ignore'))}}">{{ _('Unfollow') }}</a>
+    {% endif %}
     {% if deputy.bio %}<p>{{deputy.bio}}</p>{% endif %}
     
 </div>
