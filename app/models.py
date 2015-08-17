@@ -152,7 +152,7 @@ class Project(db.Model):
     votesNo = db.Column(db.Integer, default=0)
     deputy_id = db.Column(db.Integer, db.ForeignKey('deputy.id'))
     voted_by = db.relationship('User',
-                           secondary=Votes,
+                           secondary='votes',
                            primaryjoin=(Votes.project_number == number),
                            backref = db.backref('voted_on', lazy = 'dynamic'),
                            lazy = 'dynamic')
